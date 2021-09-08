@@ -49,6 +49,10 @@ namespace ShadowMonster.TileEngine
             TileWidth = tileWidth;
             TileHeight = tileHeight;
         }
+        public static Vector2 VectorFromOrigin(Vector2 origin)
+        {
+            return new Vector2((int)origin.X / tileWidth * tileWidth, (int)origin.Y / tileHeight * tileHeight);
+        }
         public static Point VectorToCell(Vector2 position)
         {
             return new Point((int)position.X / tileWidth, (int)position.Y / tileHeight);

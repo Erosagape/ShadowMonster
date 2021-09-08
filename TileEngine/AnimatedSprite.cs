@@ -34,6 +34,10 @@ namespace ShadowMonster.TileEngine
         public Vector2 Position;
         Vector2 velocity;
         float speed = 200.0f;
+        public Vector2 Origin
+        {
+            get { return new Vector2(Engine.TileWidth/2,Engine.TileHeight/2); }
+        }
         public bool IsActive { get; set; }
         public bool IsAnimating
         {

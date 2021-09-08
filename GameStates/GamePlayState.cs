@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ShadowMonster.TileEngine;
+using ShadowMonster.ShadowMonsters;
+using ShadowMonster.Characters;
+
 namespace ShadowMonster.GameStates
 {
     public class GamePlayState : BaseGameState
@@ -14,13 +17,18 @@ namespace ShadowMonster.GameStates
         private Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
         private AnimatedSprite sprite;
         private Vector2 motion;
+        private bool inMotion;
+        private Rectangle collision;
+        private ShadowMonsterManager monsterManager = new ShadowMonsterManager();
         public GamePlayState(Game game) : base(game)
         {
 
         }
         protected override void LoadContent()
         {
+            MoveManager.FillMoves();
             // TODO: use this.Content to load your game content here
+            ShadowMonsterManager.FromFile(@".\Content\ShadowMonsters.txt", content);
             TileSet set = new TileSet();
             set.TextureNames.Add("tileset1");
             set.Textures.Add(content.Load<Texture2D>("Tiles/tileset16-outdoors"));
@@ -39,8 +47,12 @@ namespace ShadowMonster.GameStates
                     random.Next(2, 4));
             }
             map = new TileMap(set, groundLayer, edgeLayer, buildingLayer, decorationLayer, "level1");
-            engine.SetMap(map);
+            Character c = Character.FromString(GameRef, "Paul,ninja_m,WalkDown,PaulHello,0,fire1.......");
+            c.Sprite.Position = new Vector2(2 * Engine.TileWidth, 2 * Engine.TileHeight);
+            map.CharacterLayer.Characters.Add(new Point(2, 2), c);
 
+            engine.SetMap(map);
+            /*
             Animation animation = new Animation(3, 32, 36, 0, 0);
             animations.Add(AnimationKey.WalkUp, animation);
             animation = new Animation(3, 32, 36, 0, 36);
@@ -49,7 +61,10 @@ namespace ShadowMonster.GameStates
             animations.Add(AnimationKey.WalkDown, animation);
             animation = new Animation(3, 32, 36, 0, 108);
             animations.Add(AnimationKey.WalkLeft, animation);
+            
             sprite = new AnimatedSprite(content.Load<Texture2D>("Sprites/mage_f"), animations);
+            */
+            sprite = new AnimatedSprite(content.Load<Texture2D>("Sprites/mage_f"), Game1.Animations);
             sprite.CurrentAnimation = AnimationKey.WalkDown;
             base.LoadContent();
         }
@@ -57,39 +72,90 @@ namespace ShadowMonster.GameStates
         {
             engine.Update(gameTime);
             motion = Vector2.Zero;
-            if (Xin.KeyboardState.IsKeyDown(Keys.W) || Xin.KeyboardState.IsKeyDown(Keys.Up))
+            if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.W) || Xin.KeyboardState.IsKeyDown(Keys.Up)))
             {
                 motion.Y = -1;
                 sprite.CurrentAnimation = AnimationKey.WalkUp;
                 sprite.IsAnimating = true;
+                inMotion = true;
+                collision = new Rectangle(
+                    (int)sprite.Position.X,
+                    (int)sprite.Position.Y- Engine.TileHeight*2,
+                    Engine.TileWidth,
+                    Engine.TileHeight
+                    );
             }
-            else if (Xin.KeyboardState.IsKeyDown(Keys.S) || Xin.KeyboardState.IsKeyDown(Keys.Down))
+            else if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.S) || Xin.KeyboardState.IsKeyDown(Keys.Down)))
             {
                 motion.Y = 1;
                 sprite.CurrentAnimation = AnimationKey.WalkDown;
                 sprite.IsAnimating = true;
+                inMotion = true;
+                collision = new Rectangle(
+                    (int)sprite.Position.X,
+                    (int)sprite.Position.Y - Engine.TileHeight * 2,
+                    Engine.TileWidth,
+                    Engine.TileHeight
+                    );
             }
-            else if (Xin.KeyboardState.IsKeyDown(Keys.A) || Xin.KeyboardState.IsKeyDown(Keys.Left))
+            else if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.A) || Xin.KeyboardState.IsKeyDown(Keys.Left)))
             {
                 motion.X = -1;
                 sprite.CurrentAnimation = AnimationKey.WalkLeft;
                 sprite.IsAnimating = true;
+                inMotion = true;
+                collision = new Rectangle(
+                    (int)sprite.Position.X,
+                    (int)sprite.Position.Y - Engine.TileHeight * 2,
+                    Engine.TileWidth,
+                    Engine.TileHeight
+                    );
             }
-            else if (Xin.KeyboardState.IsKeyDown(Keys.D) || Xin.KeyboardState.IsKeyDown(Keys.Right))
+            else if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.D) || Xin.KeyboardState.IsKeyDown(Keys.Right)))
             {
                 motion.X = 1;
                 sprite.CurrentAnimation = AnimationKey.WalkRight;
                 sprite.IsAnimating = true;
+                inMotion = true;
+                collision = new Rectangle(
+                    (int)sprite.Position.X,
+                    (int)sprite.Position.Y - Engine.TileHeight * 2,
+                    Engine.TileWidth,
+                    Engine.TileHeight
+                    );
             }
-            else
-            {
-                sprite.IsAnimating = false;
-            }
+           
             if (motion != Vector2.Zero)
             {
                 motion.Normalize();
                 motion *= (sprite.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-
+                Rectangle pRect = new Rectangle(
+                    (int)(sprite.Position.X+motion.X),
+                    (int)(sprite.Position.Y + motion.Y),
+                    Engine.TileWidth,
+                    Engine.TileHeight
+                    );
+                if (pRect.Intersects(collision))
+                {
+                    sprite.IsAnimating = false;
+                    inMotion = false;
+                    motion = Vector2.Zero;
+                }
+                foreach(Point p in engine.Map.CharacterLayer.Characters.Keys)
+                {
+                    Rectangle r = new Rectangle(
+                        p.X*Engine.TileWidth,
+                        p.Y * Engine.TileHeight,
+                        Engine.TileWidth,
+                        Engine.TileHeight
+                        );
+                    if (r.Intersects(pRect))
+                    {
+                        motion = Vector2.Zero;
+                        sprite.IsAnimating = false;
+                        inMotion = false;
+                    }
+                }
                 Vector2 newPosition = sprite.Position + motion;
                 newPosition.X = (int)newPosition.X;
                 newPosition.Y = (int)newPosition.Y;
@@ -98,6 +164,16 @@ namespace ShadowMonster.GameStates
                     new Point(map.WidthInPixels,map.HeightInPixels),
                     motion
                     );
+                if (motion == Vector2.Zero)
+                {
+                    Vector2 origin = new Vector2(
+                        sprite.Position.X + sprite.Origin.X,
+                        sprite.Position.Y + sprite.Origin.Y
+                        );
+                    sprite.Position = Engine.VectorFromOrigin(origin);
+                    inMotion = false;
+                    sprite.IsAnimating = false;
+                }
             }
             Engine.Camera.LockToSprite(map, sprite, new Rectangle(0, 0, 1280, 720));
             sprite.Update(gameTime);

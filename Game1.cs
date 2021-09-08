@@ -15,6 +15,11 @@ namespace ShadowMonster
         private SpriteBatch spriteBatch;
         private readonly GamePlayState gamePlayState;
         private readonly GameStateManager stateManager;
+        private static Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
+        public static Dictionary<AnimationKey, Animation> Animations 
+        {
+            get { return animations; } 
+        }
         public SpriteBatch SpriteBatch => spriteBatch;
         public GamePlayState GamePlayState => gamePlayState;
         public Game1()
@@ -33,6 +38,17 @@ namespace ShadowMonster
 
         protected override void Initialize()
         {
+            Animation animation = new Animation(3, 32, 36, 0, 0);
+            animations.Add(AnimationKey.WalkUp, animation);
+
+            animation = new Animation(3, 32, 36, 0, 36);
+            animations.Add(AnimationKey.WalkRight, animation);
+
+            animation = new Animation(3, 32, 36, 0, 72);
+            animations.Add(AnimationKey.WalkDown, animation);
+
+            animation = new Animation(3, 32, 36, 0, 108);
+            animations.Add(AnimationKey.WalkLeft, animation);
             // TODO: Add your initialization logic here
             Components.Add(new Xin(this));
             base.Initialize();

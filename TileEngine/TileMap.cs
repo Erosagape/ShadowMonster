@@ -13,6 +13,8 @@ namespace ShadowMonster.TileEngine
         TileLayer edgeLayer;
         TileLayer buildingLayer;
         TileLayer decorationLayer;
+        CharacterLayer characterLayer;
+        public CharacterLayer CharacterLayer => characterLayer;
         int mapWidth;
         int mapHeight;
         TileSet tileSet;
@@ -59,9 +61,9 @@ namespace ShadowMonster.TileEngine
         }
         private TileMap()
         {
-
+            characterLayer = new CharacterLayer();
         }
-        private TileMap(TileSet tileSet,string mapName)
+        private TileMap(TileSet tileSet,string mapName) : this()
         {
             this.tileSet = tileSet;
             this.mapName = mapName;
@@ -155,6 +157,7 @@ namespace ShadowMonster.TileEngine
                 buildingLayer.Update(gameTime);
             if (decorationLayer != null)
                 decorationLayer.Update(gameTime);
+            characterLayer.Update(gameTime);
         }
         public void Draw(GameTime gameTime,SpriteBatch spriteBatch,Camera camera)
         {
@@ -162,6 +165,9 @@ namespace ShadowMonster.TileEngine
                 groundLayer.Draw(gameTime, spriteBatch, tileSet, camera);
             if (edgeLayer != null)
                 edgeLayer.Draw(gameTime, spriteBatch, tileSet, camera);
+
+            characterLayer.Draw(gameTime, spriteBatch, camera);
+
             if (buildingLayer != null)
                 buildingLayer.Draw(gameTime, spriteBatch, tileSet, camera);
             if (decorationLayer != null)
