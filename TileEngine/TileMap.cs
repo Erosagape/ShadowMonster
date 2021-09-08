@@ -105,7 +105,7 @@ namespace ShadowMonster.TileEngine
         }
         public Tile GetBuildingTile(int x,int y)
         {
-            return GetBuildingTile(x, y);
+            return buildingLayer.GetTile(x, y);
         }
         public void SetDecorationTile(int x,int y,int set,int index)
         {

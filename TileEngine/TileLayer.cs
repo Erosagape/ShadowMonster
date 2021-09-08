@@ -65,12 +65,13 @@ namespace ShadowMonster.TileEngine
             {
                 for (int x = 0; x < this.width; x++)
                 {
-                    tiles[y * width + x] = new Tile();
+                    tiles[(y * width) + x] = new Tile();
                 }
 
             }
         }
         public TileLayer(int width,int height,int set,int index)
+            :this()
         {
             tiles = new Tile[height * width];
             this.width = width;
@@ -79,7 +80,7 @@ namespace ShadowMonster.TileEngine
             {
                 for (int x = 0; x < this.width; x++)
                 {
-                    tiles[y * width + x] = new Tile(set,index);
+                    tiles[(y * width) + x] = new Tile(set,index);
                 }
             }
         }
@@ -89,7 +90,7 @@ namespace ShadowMonster.TileEngine
                 return new Tile();
             if (x >= width || y >= height)
                 return new Tile();
-            return tiles[y * width + x];
+            return tiles[(y * width) + x];
         }
         public void SetTile(int x,int y,int tileSet,int tileIndex)
         {
@@ -97,7 +98,7 @@ namespace ShadowMonster.TileEngine
                 return;
             if (x >= width || y >= height)
                 return;
-            tiles[y * width + x] = new Tile(tileSet, tileIndex);
+            tiles[(y * width) + x] = new Tile(tileSet, tileIndex);
         }
         public void Update(GameTime gameTime)
         {
@@ -117,8 +118,8 @@ namespace ShadowMonster.TileEngine
                 );
             min.X = Math.Max(0, cameraPoint.X - 1);
             min.Y = Math.Max(0, cameraPoint.Y - 1);
-            max.X = Math.Min(viewPoint.X + 1, width);
-            max.Y = Math.Min(viewPoint.Y + 1, height);
+            max.X = Math.Min(viewPoint.X + 1, Width);
+            max.Y = Math.Min(viewPoint.Y + 1, Height);
             destination = new Rectangle(
                 0, 0,
                 Engine.TileWidth,
