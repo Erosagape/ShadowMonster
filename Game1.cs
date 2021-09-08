@@ -16,10 +16,7 @@ namespace ShadowMonster
         private readonly GamePlayState gamePlayState;
         private readonly GameStateManager stateManager;
         private static Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
-        public static Dictionary<AnimationKey, Animation> Animations 
-        {
-            get { return animations; } 
-        }
+        public static Dictionary<AnimationKey, Animation> Animations => animations;
         public SpriteBatch SpriteBatch => spriteBatch;
         public GamePlayState GamePlayState => gamePlayState;
         public Game1()

@@ -14,7 +14,6 @@ namespace ShadowMonster.GameStates
     {
         private readonly Engine engine = new Engine(new Rectangle(0, 0, 1280, 720));
         private TileMap map;
-        private Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
         private AnimatedSprite sprite;
         private Vector2 motion;
         private bool inMotion;
@@ -47,31 +46,22 @@ namespace ShadowMonster.GameStates
                     random.Next(2, 4));
             }
             map = new TileMap(set, groundLayer, edgeLayer, buildingLayer, decorationLayer, "level1");
-            Character c = Character.FromString(GameRef, "Paul,ninja_m,WalkDown,PaulHello,0,fire1.......");
+
+            Character c = Character.FromString(GameRef, "Paul,ninja_m,WalkDown,PaulHello,0,fire1,,,,,,,");
             c.Sprite.Position = new Vector2(2 * Engine.TileWidth, 2 * Engine.TileHeight);
             map.CharacterLayer.Characters.Add(new Point(2, 2), c);
 
             engine.SetMap(map);
-            /*
-            Animation animation = new Animation(3, 32, 36, 0, 0);
-            animations.Add(AnimationKey.WalkUp, animation);
-            animation = new Animation(3, 32, 36, 0, 36);
-            animations.Add(AnimationKey.WalkRight, animation);
-            animation = new Animation(3, 32, 36, 0, 72);
-            animations.Add(AnimationKey.WalkDown, animation);
-            animation = new Animation(3, 32, 36, 0, 108);
-            animations.Add(AnimationKey.WalkLeft, animation);
-            
-            sprite = new AnimatedSprite(content.Load<Texture2D>("Sprites/mage_f"), animations);
-            */
+         
             sprite = new AnimatedSprite(content.Load<Texture2D>("Sprites/mage_f"), Game1.Animations);
+            
             sprite.CurrentAnimation = AnimationKey.WalkDown;
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
             engine.Update(gameTime);
-            motion = Vector2.Zero;
+
             if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.W) || Xin.KeyboardState.IsKeyDown(Keys.Up)))
             {
                 motion.Y = -1;
@@ -93,7 +83,7 @@ namespace ShadowMonster.GameStates
                 inMotion = true;
                 collision = new Rectangle(
                     (int)sprite.Position.X,
-                    (int)sprite.Position.Y - Engine.TileHeight * 2,
+                    (int)sprite.Position.Y + Engine.TileHeight * 2,
                     Engine.TileWidth,
                     Engine.TileHeight
                     );
@@ -105,8 +95,8 @@ namespace ShadowMonster.GameStates
                 sprite.IsAnimating = true;
                 inMotion = true;
                 collision = new Rectangle(
-                    (int)sprite.Position.X,
-                    (int)sprite.Position.Y - Engine.TileHeight * 2,
+                    (int)sprite.Position.X - Engine.TileHeight * 2,
+                    (int)sprite.Position.Y,
                     Engine.TileWidth,
                     Engine.TileHeight
                     );
@@ -118,8 +108,8 @@ namespace ShadowMonster.GameStates
                 sprite.IsAnimating = true;
                 inMotion = true;
                 collision = new Rectangle(
-                    (int)sprite.Position.X,
-                    (int)sprite.Position.Y - Engine.TileHeight * 2,
+                    (int)sprite.Position.X + Engine.TileHeight * 2,
+                    (int)sprite.Position.Y,
                     Engine.TileWidth,
                     Engine.TileHeight
                     );
@@ -130,7 +120,7 @@ namespace ShadowMonster.GameStates
                 motion.Normalize();
                 motion *= (sprite.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 Rectangle pRect = new Rectangle(
-                    (int)(sprite.Position.X+motion.X),
+                    (int)(sprite.Position.X + motion.X),
                     (int)(sprite.Position.Y + motion.Y),
                     Engine.TileWidth,
                     Engine.TileHeight
@@ -144,7 +134,7 @@ namespace ShadowMonster.GameStates
                 foreach(Point p in engine.Map.CharacterLayer.Characters.Keys)
                 {
                     Rectangle r = new Rectangle(
-                        p.X*Engine.TileWidth,
+                        p.X * Engine.TileWidth,
                         p.Y * Engine.TileHeight,
                         Engine.TileWidth,
                         Engine.TileHeight

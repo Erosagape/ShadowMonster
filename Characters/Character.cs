@@ -15,16 +15,31 @@ namespace ShadowMonster.Characters
         public const float SpeakingRadius = 40f;
         public const int MonsterLimit = 6;
         protected string name;
-        public string Name => name;
+        public string Name 
+        {
+            get { return name; }
+            set { name = value; }
+        }
         protected string textureName;
-        public string SpriteName => textureName;
+        public string SpriteName 
+        { 
+            get { return textureName; }
+        }
         protected readonly ShadowMonsters.ShadowMonster[] monsters = new ShadowMonsters.ShadowMonster[MonsterLimit];
         protected int currentMonster;
         protected ShadowMonsters.ShadowMonster givingMonster;
         protected AnimatedSprite sprite;
-        public AnimatedSprite Sprite => sprite;
+        public AnimatedSprite Sprite
+        {
+            get { return sprite; }
+        }
         protected string conversation;
-        public string Conversation => conversation;
+        public string Conversation {
+            get
+            {
+                return conversation;
+            }
+        }
         public bool Battled { get; set; }
         protected static Game gameRef;
         public List<ShadowMonsters.ShadowMonster> BattleMonsters => monsters.ToList<ShadowMonsters.ShadowMonster>();
@@ -49,6 +64,7 @@ namespace ShadowMonster.Characters
         {
             if (gameRef == null)
                 gameRef = game;
+
             Character character= new Character();
             string[] parts = characterString.Split(',');
             character.name = parts[0];

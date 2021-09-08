@@ -157,6 +157,7 @@ namespace ShadowMonster.TileEngine
                 buildingLayer.Update(gameTime);
             if (decorationLayer != null)
                 decorationLayer.Update(gameTime);
+
             characterLayer.Update(gameTime);
         }
         public void Draw(GameTime gameTime,SpriteBatch spriteBatch,Camera camera)
