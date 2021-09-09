@@ -8,6 +8,7 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <RootNamespace>ShadowMonster</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
@@ -31,5 +32,8 @@
     <None Update="Content\ShadowMonsters.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Fonts\" />
   </ItemGroup>
 </Project>

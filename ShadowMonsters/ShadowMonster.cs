@@ -15,7 +15,7 @@ namespace ShadowMonster.ShadowMonsters
         Dark, Earth, Fire, Light, Water, Wind
     }
 
-    public class ShadowMonster
+    public class Monster
     {
         #region Field Region
 
@@ -136,7 +136,7 @@ namespace ShadowMonster.ShadowMonsters
 
         #region Constructor Region
 
-        private ShadowMonster()
+        private Monster()
         {
             level = 1;
             knownMoves = new Dictionary<string, IMove>();
@@ -150,7 +150,7 @@ namespace ShadowMonster.ShadowMonsters
 
         #region Method region
 
-        public void ResoleveMove(IMove move, ShadowMonster target)
+        public void ResoleveMove(IMove move, Monster target)
         {
             bool found;
             switch (move.Target)
@@ -417,7 +417,7 @@ namespace ShadowMonster.ShadowMonsters
             //currentHealth = health;
         }
 
-        public long WinBattle(ShadowMonster target)
+        public long WinBattle(Monster target)
         {
             int levelDiff = target.Level - level;
             long expGained;
@@ -450,7 +450,7 @@ namespace ShadowMonster.ShadowMonsters
             return expGained;
         }
 
-        public long LoseBattle(ShadowMonster target)
+        public long LoseBattle(Monster target)
         {
             long expGained = (long)((float)WinBattle(target) * .5f);
             experience += expGained;
@@ -473,7 +473,7 @@ namespace ShadowMonster.ShadowMonsters
 
         public object Clone()
         {
-            ShadowMonster monster = new ShadowMonster
+            Monster monster = new Monster
             {
                 name = this.name,
                 displayName = this.displayName,
@@ -525,9 +525,9 @@ namespace ShadowMonster.ShadowMonsters
             }
         }
 
-        public static ShadowMonster FromString(string description, ContentManager content)
+        public static Monster FromString(string description, ContentManager content)
         {
-            ShadowMonster monster = new ShadowMonster();
+            Monster monster = new Monster();
             string[] parts = description.Split(',');
 
             monster.name = parts[0];
@@ -579,9 +579,9 @@ namespace ShadowMonster.ShadowMonsters
             return sb.ToString();
         }
 
-        public static ShadowMonster FromString(string lineIn)
+        public static Monster FromString(string lineIn)
         {
-            ShadowMonster monster = new ShadowMonster();
+            Monster monster = new Monster();
             string[] parts = lineIn.Split(',');
 
             monster.name = parts[0];
@@ -669,9 +669,9 @@ namespace ShadowMonster.ShadowMonsters
             return true;
         }
 
-        public static ShadowMonster Load(ContentManager content, string monster)
+        public static Monster Load(ContentManager content, string monster)
         {
-            ShadowMonster s = new ShadowMonster();
+            Monster s = new Monster();
 
             string[] parts = monster.Split(',');
             s.name = parts[0];

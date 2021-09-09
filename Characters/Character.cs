@@ -25,9 +25,9 @@ namespace ShadowMonster.Characters
         { 
             get { return textureName; }
         }
-        protected readonly ShadowMonsters.ShadowMonster[] monsters = new ShadowMonsters.ShadowMonster[MonsterLimit];
+        protected readonly ShadowMonsters.Monster [] monsters = new ShadowMonsters.Monster [MonsterLimit];
         protected int currentMonster;
-        protected ShadowMonsters.ShadowMonster givingMonster;
+        protected ShadowMonsters.Monster  givingMonster;
         protected AnimatedSprite sprite;
         public AnimatedSprite Sprite
         {
@@ -42,12 +42,12 @@ namespace ShadowMonster.Characters
         }
         public bool Battled { get; set; }
         protected static Game gameRef;
-        public List<ShadowMonsters.ShadowMonster> BattleMonsters => monsters.ToList<ShadowMonsters.ShadowMonster>();
-        public ShadowMonsters.ShadowMonster BattleMonster
+        public List<ShadowMonsters.Monster > BattleMonsters => monsters.ToList<ShadowMonsters.Monster >();
+        public ShadowMonsters.Monster  BattleMonster
         {
             get { return monsters[currentMonster]; }
         }
-        public ShadowMonsters.ShadowMonster GiveMonster
+        public ShadowMonsters.Monster  GiveMonster
         {
             get { return givingMonster; }
         }
@@ -79,8 +79,11 @@ namespace ShadowMonster.Characters
             character.currentMonster = int.Parse(parts[4]);
             for(int i=5;i<11 && i< parts.Length - 1; i++)
             {
-                character.BattleMonsters[i - 5] = ShadowMonsterManager.GetShadowMonster(parts[parts.Length - 1].ToLowerInvariant());
+                var monster =
+                    ShadowMonsterManager.GetShadowMonster(parts[i].ToLowerInvariant());
+                character.monsters[i - 5] = monster;
             }
+            character.givingMonster = ShadowMonsterManager.GetShadowMonster(parts[parts.Length - 1].ToLowerInvariant());
             return character;
         }
         public void ChangeMonster(int index)

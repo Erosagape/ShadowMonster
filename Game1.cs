@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ShadowMonster.GameStates;
 using ShadowMonster.TileEngine;
+using ShadowMonster.ConversationComponents;
 using System;
 using System.Collections.Generic;
 
@@ -11,10 +12,21 @@ namespace ShadowMonster
     public class Game1 : Game
     {
         public static Random Random = new Random();
+        public static Player Player;
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private readonly GamePlayState gamePlayState;
-        private readonly GameStateManager stateManager;
+        private readonly GameStateManager stateManager;        
+        private readonly ConversationState conversationState;
+        public ConversationState ConversationState => conversationState;
+        private readonly LevelUpState levelUpState;
+        public LevelUpState LevelUpState => levelUpState;
+        private readonly BattleOverState battleOverState;
+        public BattleOverState BattleOverState => battleOverState;
+        private readonly DamageState damageState;
+        public DamageState DamageState => damageState;
+        private readonly BattleState battleState;
+        public BattleState BattleState => battleState;
         private static Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
         public static Dictionary<AnimationKey, Animation> Animations => animations;
         public SpriteBatch SpriteBatch => spriteBatch;
@@ -27,10 +39,20 @@ namespace ShadowMonster
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
+            
             stateManager = new GameStateManager(this);
             Components.Add(stateManager);
+
             gamePlayState = new GamePlayState(this);
-            stateManager.PushState(gamePlayState);
+            conversationState = new ConversationState(this);
+            levelUpState = new LevelUpState(this);
+            damageState = new DamageState(this);
+            battleOverState = new BattleOverState(this);
+            battleState = new BattleState(this);
+
+            stateManager.PushState(gamePlayState);            
+            ConversationManager.Instance.CreateConversations(this);
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -48,6 +70,9 @@ namespace ShadowMonster
             animations.Add(AnimationKey.WalkLeft, animation);
             // TODO: Add your initialization logic here
             Components.Add(new Xin(this));
+            Components.Add(new FontManager(this));
+
+            Game1.Player = new Player(this, "Bonnie", true, "Sprites/mage_f");
             base.Initialize();
         }
 

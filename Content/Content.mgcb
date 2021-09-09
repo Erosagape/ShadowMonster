@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Fonts/testfont.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/testfont.spritefont
+
 #begin ShadowMonsterImages/airDragon.png
 /importer:TextureImporter
 /processor:TextureProcessor
