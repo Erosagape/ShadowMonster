@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace ShadowMonster.ShadowMonsters
+namespace ShadowMonsters.ShadowMonsters
 {
     public enum Target
     {
-        Self,Enemy
+        Self, Enemy
     }
+
     public enum MoveType
     {
-        Attack,Heal,Buff,Debuff,Status
+        Attack, Heal, Buff, Debuff, Status
     }
+
     public enum MoveElement
     {
-        None,Dark,Earth,Fire,Light,Water,Wind
+        None, Dark, Earth, Fire, Light, Water, Wind
     }
 
     public interface IMove

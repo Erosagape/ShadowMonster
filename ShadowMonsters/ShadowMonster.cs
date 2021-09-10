@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShadowMonster.ShadowMonsters
+namespace ShadowMonsters.ShadowMonsters
 {
     public enum ShadowMonsterElement
     {
@@ -572,7 +572,7 @@ namespace ShadowMonster.ShadowMonsters
             sb.Append(Name + "," + DisplayName + "," + Element.ToString() + "," + costToBuy + ",");
             sb.Append(Level + "," + attack + "," + defense + "," + speed + "," + health + ",0,0");
 
-            foreach (IMove move in KnownMoves.Values)
+            foreach(IMove move in KnownMoves.Values)
             {
                 sb.Append("," + move.Name + ":" + move.UnlockedAt);
             }

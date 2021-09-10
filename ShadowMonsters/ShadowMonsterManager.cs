@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShadowMonster.ShadowMonsters
+namespace ShadowMonsters.ShadowMonsters
 {
     public class ShadowMonsterManager
     {
