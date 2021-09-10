@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShadowMonster.TileEngine
+namespace ShadowMonsters.TileEngine
 {
     public enum AnimationKey
     {

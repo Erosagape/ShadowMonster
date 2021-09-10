@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ShadowMonster.GameStates;
-using ShadowMonster.TileEngine;
-using ShadowMonster.ConversationComponents;
+using ShadowMonsters.GameStates;
+using ShadowMonsters.TileEngine;
+using ShadowMonsters.ConversationComponents;
 using System;
 using System.Collections.Generic;
 
-namespace ShadowMonster
+namespace ShadowMonsters
 {
     public class Game1 : Game
     {

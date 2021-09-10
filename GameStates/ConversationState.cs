@@ -4,9 +4,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ShadowMonster.Characters;
-using ShadowMonster.ConversationComponents;
-namespace ShadowMonster.GameStates
+using ShadowMonsters.Characters;
+using ShadowMonsters.ConversationComponents;
+namespace ShadowMonsters.GameStates
 {
     public interface IConversationState
     {

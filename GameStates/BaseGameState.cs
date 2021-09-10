@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-namespace ShadowMonster.GameStates
+using ShadowMonsters;
+
+namespace ShadowMonsters.GameStates
 {
     public class BaseGameState:GameState
     {

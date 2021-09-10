@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-namespace ShadowMonster.TileEngine
+namespace ShadowMonsters.TileEngine
 {
     public class Camera
     {

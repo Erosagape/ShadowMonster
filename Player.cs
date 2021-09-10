@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ShadowMonster.ShadowMonsters;
-using ShadowMonster.TileEngine;
+
+using ShadowMonsters.TileEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-namespace ShadowMonster
+namespace ShadowMonsters
 {
     public class Player : DrawableGameComponent
     {

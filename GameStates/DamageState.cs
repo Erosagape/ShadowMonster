@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ShadowMonster.ShadowMonsters;
-namespace ShadowMonster.GameStates
+
+namespace ShadowMonsters.GameStates
 {
     public enum CurrentTurn
     {

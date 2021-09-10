@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ShadowMonster;
-using ShadowMonster.GameStates;
-using ShadowMonster.ShadowMonsters;
+using ShadowMonsters;
+using ShadowMonsters.GameStates;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShadowMonster.GameStates
+namespace ShadowMonsters.GameStates
 {
     public interface ILevelUpState
     {

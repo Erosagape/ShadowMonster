@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShadowMonster.ConversationComponents
+namespace ShadowMonsters.ConversationComponents
 {
     public enum ActionType
     {

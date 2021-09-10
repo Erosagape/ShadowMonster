@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShadowMonster.ShadowMonsters
+namespace ShadowMonsters
 {
     public enum Target
     {

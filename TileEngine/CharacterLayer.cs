@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ShadowMonster.Characters;
-namespace ShadowMonster.TileEngine
+using ShadowMonsters.Characters;
+namespace ShadowMonsters.TileEngine
 {
     public class CharacterLayer
     {

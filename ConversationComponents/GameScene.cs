@@ -4,7 +4,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-namespace ShadowMonster.ConversationComponents
+using ShadowMonsters;
+
+namespace ShadowMonsters.ConversationComponents
 {
     public class GameScene
     {
@@ -82,7 +84,7 @@ namespace ShadowMonster.ConversationComponents
         }
         public void SetText(string text)
         {
-            textPosition = new Vector2(50, 50);
+            textPosition = new Vector2(500, 50);
             StringBuilder sb = new StringBuilder();
             float currentLength = 0f;
             string[] parts = text.Split(' ');
@@ -137,8 +139,11 @@ namespace ShadowMonster.ConversationComponents
             {
                 spriteBatch.Draw(background, Vector2.Zero, Color.White);
             }
+
             spriteBatch.DrawString(FontManager.GetFont("testfont"), text, textPosition, Color.White);
+
             Vector2 position = menuPosition;
+
             Rectangle optionRect = new Rectangle(0, (int)position.Y, 1280, FontManager.GetFont("testfont").LineSpacing);
             isMouseOver = false;
             for(int i = 0; i < options.Count - 1; i++)

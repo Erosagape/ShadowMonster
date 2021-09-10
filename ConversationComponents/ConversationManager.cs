@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-namespace ShadowMonster.ConversationComponents
+namespace ShadowMonsters.ConversationComponents
 {
     public class ConversationManager
     {
@@ -44,7 +44,10 @@ namespace ShadowMonster.ConversationComponents
         public void CreateConversations(Game gameRef)
         {
             conversationList.Clear();
-            Conversation c = new Conversation("PaulHello", "Hello");
+            Conversation c = new Conversation("PaulHello", "Hello")
+            {
+                BackgroundName = "scenebackground",
+            };
             List<SceneOption> options = new List<SceneOption>();
             SceneOption teach = new SceneOption(
                 "Teach",
@@ -64,6 +67,7 @@ namespace ShadowMonster.ConversationComponents
                 options
                 );
             c.AddScene("Hello", scene);
+
             options = new List<SceneOption>();
             scene = new GameScene(
                 gameRef,
@@ -71,7 +75,7 @@ namespace ShadowMonster.ConversationComponents
                 options
                 );
             option = new SceneOption(
-                "Good bye!",
+                "Good bye",
                 "",
                 new SceneAction() { Action=ActionType.End,Parameter="none"}
                 );

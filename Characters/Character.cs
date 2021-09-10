@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ShadowMonster;
+using ShadowMonsters;
 using Microsoft.Xna.Framework;
-using ShadowMonster.TileEngine;
+using ShadowMonsters.TileEngine;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
-using ShadowMonster.ShadowMonsters;
 
-namespace ShadowMonster.Characters
+
+namespace ShadowMonsters.Characters
 {
     public class Character
     {

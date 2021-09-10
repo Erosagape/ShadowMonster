@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShadowMonster.ShadowMonsters
+namespace ShadowMonsters
 {
     public enum ShadowMonsterElement
     {

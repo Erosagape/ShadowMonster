@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-namespace ShadowMonster
+namespace ShadowMonsters
 {
     public interface IStateManager
     {

@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-namespace ShadowMonster.ConversationComponents
+namespace ShadowMonsters.ConversationComponents
 {
     public class Conversation
     {

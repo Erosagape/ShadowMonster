@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShadowMonster
+namespace ShadowMonsters
 {
     public static class Program
     {
