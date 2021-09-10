@@ -4,7 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+<<<<<<< HEAD
 
+=======
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 namespace ShadowMonsters.TileEngine
 {
     public class Animation

@@ -9,7 +9,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <RootNamespace>ShadowMonsters</RootNamespace>
+<<<<<<< HEAD
     <AssemblyName>ShadowMonsters</AssemblyName>
+=======
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
@@ -33,5 +36,8 @@
     <None Update="Content\ShadowMonsters.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Fonts\" />
   </ItemGroup>
 </Project>

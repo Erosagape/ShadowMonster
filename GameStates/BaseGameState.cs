@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 ﻿using Microsoft.Xna.Framework;
 using ShadowMonsters.Controls;
 using System;
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Xna.Framework;
+using ShadowMonsters;
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 
 namespace ShadowMonsters.GameStates
 {

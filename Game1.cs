@@ -2,10 +2,16 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+<<<<<<< HEAD
 using ShadowMonsters.Components;
 using ShadowMonsters.ConversationComponents;
 using ShadowMonsters.GameStates;
 using ShadowMonsters.TileEngine;
+=======
+using ShadowMonsters.GameStates;
+using ShadowMonsters.TileEngine;
+using ShadowMonsters.ConversationComponents;
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +24,7 @@ namespace ShadowMonsters
     {
         public static Player Player;
         public static Random Random = new Random();
+<<<<<<< HEAD
         private static Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
         private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
@@ -61,6 +68,25 @@ namespace ShadowMonsters
             new Dictionary<string, Point>();
 
         public GraphicsDeviceManager GraphicsDeviceManager => graphics;
+=======
+        public static Player Player;
+        private readonly GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private readonly GamePlayState gamePlayState;
+        private readonly GameStateManager stateManager;        
+        private readonly ConversationState conversationState;
+        public ConversationState ConversationState => conversationState;
+        private readonly LevelUpState levelUpState;
+        public LevelUpState LevelUpState => levelUpState;
+        private readonly BattleOverState battleOverState;
+        public BattleOverState BattleOverState => battleOverState;
+        private readonly DamageState damageState;
+        public DamageState DamageState => damageState;
+        private readonly BattleState battleState;
+        public BattleState BattleState => battleState;
+        private static Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
+        public static Dictionary<AnimationKey, Animation> Animations => animations;
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
         public SpriteBatch SpriteBatch => spriteBatch;
         public GamePlayState GamePlayState => gamePlayState;
         public ConversationState ConversationState => conversationState;
@@ -104,6 +130,7 @@ namespace ShadowMonsters
             }
 
             Content.RootDirectory = "Content";
+<<<<<<< HEAD
 
             stateManager = new GameStateManager(this);
             Components.Add(stateManager);
@@ -112,12 +139,19 @@ namespace ShadowMonsters
             Muse.SetEffectVolume(Settings.SoundVolume);
             Muse.SetSongVolume(Settings.MusicVolume);
 
+=======
+            
+            stateManager = new GameStateManager(this);
+            Components.Add(stateManager);
+
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
             gamePlayState = new GamePlayState(this);
             conversationState = new ConversationState(this);
             levelUpState = new LevelUpState(this);
             damageState = new DamageState(this);
             battleOverState = new BattleOverState(this);
             battleState = new BattleState(this);
+<<<<<<< HEAD
             actionSelectionState = new ActionSelectionState(this);
             shadowMonsterSelectionState = new ShadowMonsterSelectionState(this);
             startBattleState = new StartBattleState(this);
@@ -136,6 +170,10 @@ namespace ShadowMonsters
             messageState = new MessageState(this);
 
             stateManager.PushState(titleState);
+=======
+
+            stateManager.PushState(gamePlayState);            
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
             ConversationManager.Instance.CreateConversations(this);
             IsMouseVisible = true;
         }
@@ -177,6 +215,15 @@ namespace ShadowMonsters
 
             animation = new Animation(3, 32, 36, 0, 108);
             animations.Add(AnimationKey.WalkLeft, animation);
+<<<<<<< HEAD
+=======
+            // TODO: Add your initialization logic here
+            Components.Add(new Xin(this));
+            Components.Add(new FontManager(this));
+
+            Game1.Player = new Player(this, "Bonnie", true, "Sprites/mage_f");
+            base.Initialize();
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
         }
 
         /// <summary>

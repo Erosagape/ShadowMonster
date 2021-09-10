@@ -17,7 +17,6 @@ with.
     Size is a float value, measured in points. Modify this value to change
     the size of the font.
     -->
-    <Size>18</Size>
 
     <!--
     Spacing is a float value, measured in pixels. Modify this value to change
@@ -49,6 +48,8 @@ with.
     default range is from 32, (ASCII space), to 126, ('~'), covering the basic Latin
     character set. The characters are ordered according to the Unicode standard.
     See the documentation for more information.
+    For localized fonts you can leave this empty as the character range will be picked up
+    from the Resource Files.
     -->
     <CharacterRegions>
       <CharacterRegion>
@@ -56,5 +57,13 @@ with.
         <End>&#126;</End>
       </CharacterRegion>
     </CharacterRegions>
+    <!--
+    ResourceFiles control the charaters which will be in the font. It does this
+    by scanning the text in each of the resource files and adding those specific
+    characters to the font. 
+    -->
+    <ResourceFiles>
+        <!-- <Resx>Strings.resx</Resx> -->
+    </ResourceFiles>
   </Asset>
 </XnaContent>

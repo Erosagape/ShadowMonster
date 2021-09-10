@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 
+=======
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 namespace ShadowMonsters
 {
     public interface IGameState

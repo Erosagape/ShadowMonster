@@ -13,6 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
+<<<<<<< HEAD
 #begin Background/ShadowMonsters.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -220,10 +221,16 @@
 #begin Fonts/testfont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+=======
+#begin Fonts/testfont.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/testfont.spritefont
 
+<<<<<<< HEAD
 #begin Fonts/testfont_high.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -2544,6 +2551,8 @@
 /processorParam:TextureFormat=Color
 /build:GUI/textbox.png
 
+=======
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 #begin ShadowMonsterImages/airDragon.png
 /importer:TextureImporter
 /processor:TextureProcessor
