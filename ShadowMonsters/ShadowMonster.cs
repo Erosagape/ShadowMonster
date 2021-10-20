@@ -8,7 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+<<<<<<< HEAD
+namespace ShadowMonsters.ShadowMonsters
+=======
 namespace ShadowMonsters
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 {
     public enum ShadowMonsterElement
     {
@@ -572,7 +576,7 @@ namespace ShadowMonsters
             sb.Append(Name + "," + DisplayName + "," + Element.ToString() + "," + costToBuy + ",");
             sb.Append(Level + "," + attack + "," + defense + "," + speed + "," + health + ",0,0");
 
-            foreach (IMove move in KnownMoves.Values)
+            foreach(IMove move in KnownMoves.Values)
             {
                 sb.Append("," + move.Name + ":" + move.UnlockedAt);
             }

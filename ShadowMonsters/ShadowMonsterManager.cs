@@ -8,7 +8,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+<<<<<<< HEAD
+namespace ShadowMonsters.ShadowMonsters
+=======
 namespace ShadowMonsters
+>>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
 {
     public class ShadowMonsterManager
     {
