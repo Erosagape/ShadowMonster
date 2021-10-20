@@ -82,6 +82,19 @@ namespace ShadowMonsters.ConversationComponents
             options.Add(option);
             c.AddScene("Teach", scene);
             conversationList.Add("PaulHello", c);
+
+            c = new Conversation("BonnieHello", "Hello");
+            options = new List<SceneOption>();
+            option = new SceneOption("Shop", "", new SceneAction() { Action = ActionType.Shop, Parameter = "none" });
+            options.Add(option);
+            option = new SceneOption("Goodbye", "", new SceneAction() { Action = ActionType.End, Parameter = "none" });
+            options.Add(option);
+            scene = new GameScene(
+                gameRef,
+                "Hi,I'm Bonnie.Feel free to browse my wares",
+                options);
+            c.AddScene("Hello", scene);
+            ConversationList.Add("BonnieHello", c);
         }
     }
 }

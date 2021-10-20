@@ -11,26 +11,41 @@ namespace ShadowMonsters
 {
     public class Game1 : Game
     {
-        public static Random Random = new Random();
         public static Player Player;
-        private readonly GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-        private readonly GamePlayState gamePlayState;
-        private readonly GameStateManager stateManager;        
-        private readonly ConversationState conversationState;
-        public ConversationState ConversationState => conversationState;
-        private readonly LevelUpState levelUpState;
-        public LevelUpState LevelUpState => levelUpState;
-        private readonly BattleOverState battleOverState;
-        public BattleOverState BattleOverState => battleOverState;
-        private readonly DamageState damageState;
-        public DamageState DamageState => damageState;
-        private readonly BattleState battleState;
-        public BattleState BattleState => battleState;
+        public static Random Random = new Random();
         private static Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
-        public static Dictionary<AnimationKey, Animation> Animations => animations;
+
+        private readonly GraphicsDeviceManager graphics;
+
+        private readonly GamePlayState gamePlayState;
+        private readonly ConversationState conversationState;
+        private readonly LevelUpState levelUpState;
+        private readonly BattleOverState battleOverState;
+        private readonly DamageState damageState;
+        private readonly BattleState battleState;
+        private readonly ActionSelectionState actionSelectionState;
+        private readonly ShadowMonsterSelectionState shadowMonsterSelectionState;
+        private readonly StartBattleState startBattleState;
+        private readonly GameStateManager stateManager;
+        private readonly ShopState shopState;
+        private readonly ItemSelectionState itemSelectionState;
+        private readonly UseItemState useItemState;
+
+        private SpriteBatch spriteBatch;
+        public ItemSelectionState ItemSelectionState => itemSelectionState;
+        public UseItemState UseItemState => useItemState;
+        public ShopState ShopState => shopState;
+        public ConversationState ConversationState => conversationState;
+        public LevelUpState LevelUpState => levelUpState;        
+        public BattleOverState BattleOverState => battleOverState;        
+        public DamageState DamageState => damageState;        
+        public BattleState BattleState => battleState;
+        public ActionSelectionState ActionSelectionState => actionSelectionState;
+        public ShadowMonsterSelectionState ShadowMonsterSelectionState => shadowMonsterSelectionState;
+        public StartBattleState StartBattleState => startBattleState;
         public SpriteBatch SpriteBatch => spriteBatch;
         public GamePlayState GamePlayState => gamePlayState;
+        public static Dictionary<AnimationKey, Animation> Animations => animations;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -49,6 +64,12 @@ namespace ShadowMonsters
             damageState = new DamageState(this);
             battleOverState = new BattleOverState(this);
             battleState = new BattleState(this);
+            actionSelectionState = new ActionSelectionState(this);
+            shadowMonsterSelectionState = new ShadowMonsterSelectionState(this);
+            startBattleState = new StartBattleState(this);
+            shopState = new ShopState(this);
+            itemSelectionState = new ItemSelectionState(this);
+            useItemState = new UseItemState(this);
 
             stateManager.PushState(gamePlayState);            
             ConversationManager.Instance.CreateConversations(this);

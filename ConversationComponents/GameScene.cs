@@ -59,7 +59,7 @@ namespace ShadowMonsters.ConversationComponents
         {
             get { return isMouseOver; }
         }
-        private Vector2 menuPosition = new Vector2(50, 475);
+        private Vector2 menuPosition = new Vector2(50f, 275f);
         public Vector2 MenuPosition
         {
             get { return menuPosition; }
@@ -69,6 +69,7 @@ namespace ShadowMonsters.ConversationComponents
             normal = Color.Blue;
             highLight = Color.Red;
             options = new List<SceneOption>();
+            menuPosition = new Vector2(50f, 275f);
         }
         public GameScene(string text,List<SceneOption> options)
             : this()
@@ -84,14 +85,14 @@ namespace ShadowMonsters.ConversationComponents
         }
         public void SetText(string text)
         {
-            textPosition = new Vector2(500, 50);
+            textPosition = new Vector2(250, 50);
             StringBuilder sb = new StringBuilder();
             float currentLength = 0f;
             string[] parts = text.Split(' ');
             foreach(string s in parts)
             {
-                Vector2 size = FontManager.GetFont("testfont").MeasureString(s);
-                if(currentLength+size.X < 500f)
+                Vector2 size = FontManager.GetFont("test").MeasureString(s);
+                if(currentLength+size.X < 150f)
                 {
                     sb.Append(s);                    
                     currentLength += size.X;
@@ -140,11 +141,11 @@ namespace ShadowMonsters.ConversationComponents
                 spriteBatch.Draw(background, Vector2.Zero, Color.White);
             }
 
-            spriteBatch.DrawString(FontManager.GetFont("testfont"), text, textPosition, Color.White);
+            spriteBatch.DrawString(FontManager.GetFont("test"), text, textPosition, Color.White);
 
             Vector2 position = menuPosition;
 
-            Rectangle optionRect = new Rectangle(0, (int)position.Y, 1280, FontManager.GetFont("testfont").LineSpacing);
+            Rectangle optionRect = new Rectangle(0, (int)position.Y, 480, FontManager.GetFont("test").LineSpacing);
             isMouseOver = false;
             for(int i = 0; i < options.Count - 1; i++)
             {
@@ -161,9 +162,9 @@ namespace ShadowMonsters.ConversationComponents
                 {
                     myColor = NormalColor;
                 }
-                spriteBatch.DrawString(FontManager.GetFont("testfont"), options[i].OptionText, position, myColor);
-                position.Y += FontManager.GetFont("testfont").LineSpacing + 5;
-                optionRect.Y += FontManager.GetFont("testfont").LineSpacing + 5;
+                spriteBatch.DrawString(FontManager.GetFont("test"), options[i].OptionText, position, myColor);
+                position.Y += FontManager.GetFont("test").LineSpacing + 5;
+                optionRect.Y += FontManager.GetFont("test").LineSpacing + 5;
             }
         }
     }

@@ -160,9 +160,9 @@ namespace ShadowMonsters.GameStates
             GameRef.SpriteBatch.Begin();
             GameRef.SpriteBatch.Draw(levelUpBackground, destination, Color.White);
             Vector2 textPosition = new Vector2(destination.X + 5, destination.Y + 5);
-            GameRef.SpriteBatch.DrawString(FontManager.GetFont("testfont"), player.DisplayName,
+            GameRef.SpriteBatch.DrawString(FontManager.GetFont("test"), player.DisplayName,
             textPosition, Color.White);
-            textPosition.Y += FontManager.GetFont("testfont").LineSpacing * 2;
+            textPosition.Y += FontManager.GetFont("test").LineSpacing * 2;
             int i = 0;
             foreach (string s in attributes.Keys)
             {
@@ -172,27 +172,27 @@ namespace ShadowMonsters.GameStates
                     tint = Color.Red;
                 if (s != "Done")
                 {
-                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("testfont"), s + ":",
+                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("test"), s + ":",
                     textPosition, tint);
                     textPosition.X += 125;
-                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("testfont"),
+                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("test"),
                     attributes[s].ToString(), textPosition, tint);
                     textPosition.X += 40;
-                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("testfont"),
+                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("test"),
                     assignedTo[s].ToString(), textPosition, tint);
                     textPosition.X = destination.X + 5;
-                    textPosition.Y += FontManager.GetFont("testfont").LineSpacing;
+                    textPosition.Y += FontManager.GetFont("test").LineSpacing;
                 }
                 else
                 {
-                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("testfont"), "Done",
+                    GameRef.SpriteBatch.DrawString(FontManager.GetFont("test"), "Done",
                     textPosition, tint);
-                    textPosition.Y += FontManager.GetFont("testfont").LineSpacing * 2;
+                    textPosition.Y += FontManager.GetFont("test").LineSpacing * 2;
                 }
                 i++;
             }
             GameRef.SpriteBatch.DrawString(
-            FontManager.GetFont("testfont"),
+            FontManager.GetFont("test"),
             points.ToString() + " point left.",
             textPosition,
             Color.White);

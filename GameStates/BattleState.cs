@@ -160,12 +160,12 @@ namespace ShadowMonsters.GameStates
             GameRef.SpriteBatch.Draw(avatarHealth, enemyHealthRect, healthSourceRect,
             Color.White);
             GameRef.SpriteBatch.DrawString(
-            FontManager.GetFont("testfont"),
+            FontManager.GetFont("test"),
             player.DisplayName,
             playerName,
             Color.White);
             GameRef.SpriteBatch.DrawString(
-            FontManager.GetFont("testfont"),
+            FontManager.GetFont("test"),
             enemy.DisplayName,
             enemyName,
             Color.White);

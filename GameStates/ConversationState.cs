@@ -35,7 +35,10 @@ namespace ShadowMonsters.GameStates
         public override void Update(GameTime gameTime)
         {
             if (conversation.CurrentScene == null)
+            {
                 return;
+            }
+                
             if ((Xin.CheckKeyReleased(Keys.Space) ||
                 Xin.CheckKeyReleased(Keys.Enter) ||
                 (Xin.CheckMouseReleased(MouseButtons.Left) &&
@@ -77,6 +80,9 @@ namespace ShadowMonsters.GameStates
                         conversation.ChangeScene(conversation.CurrentScene.OptionScene);
                         break;
                     case ActionType.Shop:
+                        GameRef.ShopState.SetMerchant((Merchant)speaker);
+                        manager.PopState();
+                        manager.PushState(GameRef.ShopState);
                         break;
                     case ActionType.Talk:
                         conversation.ChangeScene(conversation.CurrentScene.OptionScene);
@@ -127,8 +133,9 @@ namespace ShadowMonsters.GameStates
         }
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
+
             GameRef.SpriteBatch.Begin();
+            base.Draw(gameTime);
             conversation.Draw(GameRef.SpriteBatch);
             GameRef.SpriteBatch.End();
 

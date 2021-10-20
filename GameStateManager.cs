@@ -74,7 +74,8 @@ namespace ShadowMonsters
         private void AddState(GameState state)
         {
             gameStates.Push(state);
-            Game.Components.Add(state);
+            if(!Game.Components.Contains(state))
+                Game.Components.Add(state);
             StateChanged += state.StateChanged;
         }
     }

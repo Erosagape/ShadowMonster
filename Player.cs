@@ -6,6 +6,8 @@ using ShadowMonsters.TileEngine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ShadowMonsters.Items;
+
 namespace ShadowMonsters
 {
     public class Player : DrawableGameComponent
@@ -57,10 +59,12 @@ namespace ShadowMonsters
             get { return mapName; }
             set { mapName = value; }
         }
+        private Backpack backpack;
+        public Backpack Backpack { get => backpack; }
         private Player(Game game)
             :base(game)
         {
-
+            backpack = new Backpack();
         }
         public Player(Game game,string name,bool gender,string textureName) : base(game)
         {
@@ -76,6 +80,7 @@ namespace ShadowMonsters
                 CurrentAnimation=AnimationKey.WalkDown
             };
             Gold = 1000;
+            backpack = new Backpack();
         }
         public virtual void AddShadowMonster(ShadowMonsters.Monster  mon)
         {
@@ -85,6 +90,7 @@ namespace ShadowMonsters
         {
             if (index < 0 || index >= MaxShadowMonsters)
             {
+                throw new IndexOutOfRangeException();
             }
             else
             {
@@ -96,7 +102,7 @@ namespace ShadowMonsters
         {
             if (index < 0 || index >= MaxShadowMonsters)
             {
-                return null;
+                throw new IndexOutOfRangeException();
             }
             return shadowMonsters[index];
         }
@@ -113,7 +119,7 @@ namespace ShadowMonsters
         {
             if (index < 0 || index >= MaxShadowMonsters)
             {
-                return null;
+                throw new IndexOutOfRangeException();
             }
             return battleShadowMonsters[index];
         }

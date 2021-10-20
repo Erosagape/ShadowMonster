@@ -70,7 +70,8 @@ namespace ShadowMonsters.Characters
             character.name = parts[0];
             character.textureName = parts[1];
             character.sprite = new AnimatedSprite(
-                game.Content.Load<Texture2D>(@"Sprites\" + parts[1]), Game1.Animations
+                game.Content.Load<Texture2D>(@"Sprites\" + parts[1]),
+                Game1.Animations
                 )
             {
                 CurrentAnimation = (AnimationKey)Enum.Parse(typeof(AnimationKey), parts[2])

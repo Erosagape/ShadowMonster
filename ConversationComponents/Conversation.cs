@@ -47,11 +47,11 @@ namespace ShadowMonsters.ConversationComponents
 
         private Conversation()
         {
-            scenes = new Dictionary<string, GameScene>();
+            this.scenes = new Dictionary<string, GameScene>();
         }
         public Conversation(string name,string firstScene)
-            :this()
         {
+            this.scenes = new Dictionary<string, GameScene>();
             this.name = name;
             this.firstScene = firstScene;
         }

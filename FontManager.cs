@@ -15,7 +15,7 @@ namespace ShadowMonsters
         }
         protected override void LoadContent()
         {
-            _fonts.Add("testfont", Game.Content.Load<SpriteFont>("Fonts/testfont"));
+            _fonts.Add("test", Game.Content.Load<SpriteFont>("Fonts/test"));
         }
         public static SpriteFont GetFont(string name)
         {

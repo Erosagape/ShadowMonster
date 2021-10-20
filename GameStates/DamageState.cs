@@ -150,19 +150,19 @@ dTimer > TimeSpan.FromSeconds(2))
             if (turn == CurrentTurn.Players)
             {
                 GameRef.SpriteBatch.DrawString(
-                FontManager.GetFont("testfont"),
+                FontManager.GetFont("test"),
                 player.DisplayName + " uses " + playerMove.Name + ".",
                 location,
                 Color.Black);
                 if (playerMove.Target == Target.Enemy && playerMove.MoveType ==
                 MoveType.Attack)
                 {
-                    location.Y += FontManager.GetFont("testfont").LineSpacing;
+                    location.Y += FontManager.GetFont("test").LineSpacing;
                     if (ShadowMonsters.Monster .GetMoveModifier(playerMove.MoveElement, enemy.Element) <
                     1f)
                     {
                         GameRef.SpriteBatch.DrawString(
-                        FontManager.GetFont("testfont"),
+                        FontManager.GetFont("test"),
                         "It is not very effective.",
                         location,
                         Color.Black);
@@ -171,7 +171,7 @@ dTimer > TimeSpan.FromSeconds(2))
                     enemy.Element) > 1f)
                     {
                         GameRef.SpriteBatch.DrawString(
-                        FontManager.GetFont("testfont"),
+                        FontManager.GetFont("test"),
                         "It is super effective.",
                         location,
                         Color.Black);
@@ -182,18 +182,18 @@ dTimer > TimeSpan.FromSeconds(2))
             else
             {
                 GameRef.SpriteBatch.DrawString(
-                FontManager.GetFont("testfont"),
+                FontManager.GetFont("test"),
                 "Enemy " + enemy.DisplayName + " uses " + enemyMove.Name + ".",
                 location,
                 Color.Black);
                 if (enemyMove.Target == Target.Enemy && playerMove.MoveType == MoveType.Attack)
                 {
-                    location.Y += FontManager.GetFont("testfont").LineSpacing;
+                    location.Y += FontManager.GetFont("test").LineSpacing;
                     if (ShadowMonsters.Monster .GetMoveModifier(enemyMove.MoveElement, player.Element) <
                     1f)
                     {
                         GameRef.SpriteBatch.DrawString(
-                        FontManager.GetFont("testfont"),
+                        FontManager.GetFont("test"),
                         "It is not very effective.",
                         location,
                         Color.Black);
@@ -202,7 +202,7 @@ dTimer > TimeSpan.FromSeconds(2))
                     player.Element) > 1f)
                     {
                         GameRef.SpriteBatch.DrawString(
-                        FontManager.GetFont("testfont"),
+                        FontManager.GetFont("test"),
                         "It is super effective.",
                         location,
                         Color.Black);
@@ -224,9 +224,9 @@ dTimer > TimeSpan.FromSeconds(2))
             enemyHealthRect.Width = (int)(enemyHealth * 286);
             GameRef.SpriteBatch.Draw(avatarHealth, enemyHealthRect, healthSourceRect,
             Color.White);
-            GameRef.SpriteBatch.DrawString(FontManager.GetFont("testfont"), player.DisplayName,
+            GameRef.SpriteBatch.DrawString(FontManager.GetFont("test"), player.DisplayName,
             playerName, Color.White);
-            GameRef.SpriteBatch.DrawString(FontManager.GetFont("testfont"), enemy.DisplayName,
+            GameRef.SpriteBatch.DrawString(FontManager.GetFont("test"), enemy.DisplayName,
 
             enemyName, Color.White);
             GameRef.SpriteBatch.Draw(player.Texture, playerMiniRect, Color.White);
