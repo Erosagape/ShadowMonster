@@ -9,10 +9,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
     <RootNamespace>ShadowMonsters</RootNamespace>
-<<<<<<< HEAD
     <AssemblyName>ShadowMonsters</AssemblyName>
-=======
->>>>>>> 9d444d84de81f8a24139bc81c8b2f9f695ad0c9b
+    <StartupObject>ShadowMonsters.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
