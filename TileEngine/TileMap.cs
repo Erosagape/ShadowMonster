@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.IO;
+
 namespace ShadowMonsters.TileEngine
 {
     public class TileMap
@@ -13,6 +15,8 @@ namespace ShadowMonsters.TileEngine
         TileLayer edgeLayer;
         TileLayer buildingLayer;
         TileLayer decorationLayer;
+        PortalLayer portalLayer;
+        CollisionLayer collisionLayer;
         CharacterLayer characterLayer;
         public CharacterLayer CharacterLayer => characterLayer;
         int mapWidth;
@@ -174,5 +178,20 @@ namespace ShadowMonsters.TileEngine
             if (decorationLayer != null)
                 decorationLayer.Draw(gameTime, spriteBatch, tileSet, camera);
         }
+
+        public bool Save(BinaryWriter writer)
+        {
+            writer.Write(mapName);
+            characterLayer.Save(writer);
+            tileSet.Save(writer);
+            edgeLayer.Save(writer);
+            groundLayer.Save(writer);
+            decorationLayer.Save(writer);
+            buildingLayer.Save(writer);
+            portalLayer.Save(writer);
+            collisionLayer.Save(writer);
+            return true;
+        }
+
     }
 }

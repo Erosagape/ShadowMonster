@@ -99,7 +99,7 @@ namespace ShadowMonsters.GameStates
                 }
                 if (Game1.Player.BattleShadowMonsters[i] != null)
                 {
-                    Monster a = Game1.Player.BattleShadowMonsters[i];
+                    ShadowMonster a = Game1.Player.BattleShadowMonsters[i];
                     GameRef.SpriteBatch.Draw(a.Texture, destination, Color.White);
                     if (destination.Contains(cursor) || playerBorderRect.Contains(cursor))
                     {

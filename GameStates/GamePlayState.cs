@@ -9,6 +9,8 @@ using ShadowMonsters.TileEngine;
 using ShadowMonsters.Characters;
 using ShadowMonsters;
 using ShadowMonsters.GameStates;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace ShadowMonsters.GameStates
 {
@@ -66,74 +68,93 @@ namespace ShadowMonsters.GameStates
             engine.SetMap(map);
             base.LoadContent();
         }
-
+        
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            engine.Draw(gameTime, GameRef.SpriteBatch);
+            GameRef.SpriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                BlendState.AlphaBlend,
+                SamplerState.PointClamp,
+                null, null, null,
+                Engine.Camera.Transformation
+                );
+            Game1.Player.Sprite.Draw(gameTime, GameRef.SpriteBatch);
+            GameRef.SpriteBatch.End();
+        }
+        private readonly byte[] IV = new byte[]
+ {
+ 067, 197, 032, 010, 211, 090, 192, 076,
+ 054, 154, 111, 023, 243, 071, 132, 090
+ };
+        private readonly byte[] Key = new byte[]
+        {
+ 067, 090, 197, 043, 049, 029, 178, 211,
+ 127, 255, 097, 233, 162, 067, 111, 022,
+        };
         public override void Update(GameTime gameTime)
         {
             engine.Update(gameTime);
             frameCount++;
-            if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.W) || Xin.KeyboardState.IsKeyDown(Keys.Up)))
+            if (Xin.KeyboardState.IsKeyDown(Keys.W) && !inMotion)
             {
                 motion.Y = -1;
                 Game1.Player.Sprite.CurrentAnimation = AnimationKey.WalkUp;
                 Game1.Player.Sprite.IsAnimating = true;
                 inMotion = true;
                 collision = new Rectangle(
-                    (int)Game1.Player.Sprite.Position.X,
-                    (int)Game1.Player.Sprite.Position.Y - Engine.TileHeight * 2,
-                    Engine.TileWidth,
-                    Engine.TileHeight
-                    );
+                (int)Game1.Player.Sprite.Position.X,
+                (int)Game1.Player.Sprite.Position.Y - Engine.TileHeight * 2,
+                Engine.TileWidth,
+                Engine.TileHeight);
             }
-            else if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.S) || Xin.KeyboardState.IsKeyDown(Keys.Down)))
+            else if (Xin.KeyboardState.IsKeyDown(Keys.S) && !inMotion)
             {
                 motion.Y = 1;
                 Game1.Player.Sprite.CurrentAnimation = AnimationKey.WalkDown;
                 Game1.Player.Sprite.IsAnimating = true;
                 inMotion = true;
                 collision = new Rectangle(
-                    (int)Game1.Player.Sprite.Position.X,
-                    (int)Game1.Player.Sprite.Position.Y + Engine.TileHeight * 2,
-                    Engine.TileWidth,
-                    Engine.TileHeight
-                    );
+                (int)Game1.Player.Sprite.Position.X,
+                (int)Game1.Player.Sprite.Position.Y + Engine.TileHeight * 2,
+                Engine.TileWidth,
+                Engine.TileHeight);
             }
-            else if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.A) || Xin.KeyboardState.IsKeyDown(Keys.Left)))
+            else if (Xin.KeyboardState.IsKeyDown(Keys.A) && !inMotion)
             {
                 motion.X = -1;
                 Game1.Player.Sprite.CurrentAnimation = AnimationKey.WalkLeft;
                 Game1.Player.Sprite.IsAnimating = true;
                 inMotion = true;
                 collision = new Rectangle(
-                    (int)Game1.Player.Sprite.Position.X - Engine.TileHeight * 2,
-                    (int)Game1.Player.Sprite.Position.Y,
-                    Engine.TileWidth,
-                    Engine.TileHeight
-                    );
+                (int)Game1.Player.Sprite.Position.X - Engine.TileWidth * 2,
+                (int)Game1.Player.Sprite.Position.Y,
+                Engine.TileWidth,
+                Engine.TileHeight);
             }
-            else if (!inMotion && (Xin.KeyboardState.IsKeyDown(Keys.D) || Xin.KeyboardState.IsKeyDown(Keys.Right)))
+            else if (Xin.KeyboardState.IsKeyDown(Keys.D) && !inMotion)
             {
                 motion.X = 1;
                 Game1.Player.Sprite.CurrentAnimation = AnimationKey.WalkRight;
                 Game1.Player.Sprite.IsAnimating = true;
                 inMotion = true;
                 collision = new Rectangle(
-                    (int)Game1.Player.Sprite.Position.X + Engine.TileHeight * 2,
-                    (int)Game1.Player.Sprite.Position.Y,
-                    Engine.TileWidth,
-                    Engine.TileHeight
-                    );
+                (int)Game1.Player.Sprite.Position.X + Engine.TileWidth * 2,
+                (int)Game1.Player.Sprite.Position.Y,
+                Engine.TileWidth,
+                Engine.TileHeight);
             }
-
             if (motion != Vector2.Zero)
             {
                 motion.Normalize();
-                motion *= (Game1.Player.Sprite.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                motion *= (Game1.Player.Sprite.Speed *
+               (float)gameTime.ElapsedGameTime.TotalSeconds);
                 Rectangle pRect = new Rectangle(
-                    (int)(Game1.Player.Sprite.Position.X + motion.X),
-                    (int)(Game1.Player.Sprite.Position.Y + motion.Y),
-                    Engine.TileWidth,
-                    Engine.TileHeight
-                    );
+                (int)(Game1.Player.Sprite.Position.X + motion.X),
+                (int)(Game1.Player.Sprite.Position.Y + motion.Y),
+                Engine.TileWidth,
+                Engine.TileHeight);
                 if (pRect.Intersects(collision))
                 {
                     Game1.Player.Sprite.IsAnimating = false;
@@ -143,11 +164,10 @@ namespace ShadowMonsters.GameStates
                 foreach (Point p in engine.Map.CharacterLayer.Characters.Keys)
                 {
                     Rectangle r = new Rectangle(
-                        p.X * Engine.TileWidth,
-                        p.Y * Engine.TileHeight,
-                        Engine.TileWidth,
-                        Engine.TileHeight
-                        );
+                    p.X * Engine.TileWidth,
+                    p.Y * Engine.TileHeight,
+                    Engine.TileWidth,
+                    Engine.TileHeight);
                     if (r.Intersects(pRect))
                     {
                         motion = Vector2.Zero;
@@ -160,76 +180,22 @@ namespace ShadowMonsters.GameStates
                 newPosition.Y = (int)newPosition.Y;
                 Game1.Player.Sprite.Position = newPosition;
                 motion = Game1.Player.Sprite.LockToMap(
-                    new Point(map.WidthInPixels, map.HeightInPixels),
-                    motion
-                    );
+                new Point(
+                map.WidthInPixels,
+                map.HeightInPixels),
+                motion);
                 if (motion == Vector2.Zero)
                 {
                     Vector2 origin = new Vector2(
-                        Game1.Player.Sprite.Position.X + Game1.Player.Sprite.Origin.X,
-                        Game1.Player.Sprite.Position.Y + Game1.Player.Sprite.Origin.Y
-                        );
+                    Game1.Player.Sprite.Position.X + Game1.Player.Sprite.Origin.X,
+                    Game1.Player.Sprite.Position.Y + Game1.Player.Sprite.Origin.Y);
                     Game1.Player.Sprite.Position = Engine.VectorFromOrigin(origin);
                     inMotion = false;
                     Game1.Player.Sprite.IsAnimating = false;
                 }
             }
             if ((Xin.CheckKeyReleased(Keys.Space) ||
-                Xin.CheckKeyReleased(Keys.Enter)) && frameCount >= 5)
-            {
-                frameCount = 0;
-                foreach (Point s in engine.Map.CharacterLayer.Characters.Keys)
-                {
-                    Character c = engine.Map.CharacterLayer.Characters[s];
-                    AnimationKey animation = Game1.Player.Sprite.CurrentAnimation;
-                    if (animation == AnimationKey.WalkLeft && (
-                        (int)c.Sprite.Position.X > (int)Game1.Player.Sprite.Position.X ||
-                        (int)c.Sprite.Position.Y != (int)Game1.Player.Sprite.Position.Y))
-                    {
-                        continue;
-                    }
-
-                    if (animation == AnimationKey.WalkUp && (
-                        (int)c.Sprite.Position.X != (int)Game1.Player.Sprite.Position.X ||
-                        (int)c.Sprite.Position.Y > (int)Game1.Player.Sprite.Position.Y))
-                    {
-                        continue;
-                    }
-
-                    if (animation == AnimationKey.WalkRight && (
-                        (int)c.Sprite.Position.X < (int)Game1.Player.Sprite.Position.X ||
-                        (int)c.Sprite.Position.Y != (int)Game1.Player.Sprite.Position.Y))
-                    {
-                        continue;
-                    }
-
-                    if (animation == AnimationKey.WalkDown && (
-                        (int)c.Sprite.Position.X != (int)Game1.Player.Sprite.Position.X ||
-                        (int)c.Sprite.Position.Y < (int)Game1.Player.Sprite.Position.Y))
-                    {
-                        continue;
-                    }
-
-                    float distance = Vector2.Distance(
-                        Game1.Player.Sprite.Origin + Game1.Player.Sprite.Position,
-                        c.Sprite.Origin + c.Sprite.Position
-                        );
-                    if (Math.Abs(distance) < (Engine.TileWidth + (Engine.TileWidth / 2)))
-                    {
-                        manager.PushState(
-                            (ConversationState)GameRef.ConversationState
-                            );
-                        GameRef.ConversationState.SetConversation(c);
-                        GameRef.ConversationState.StartConversation();
-                        break;
-                    }
-                }
-            }
-            if (Xin.CheckKeyReleased(Keys.I))
-            {
-                manager.PushState(GameRef.ItemSelectionState);
-            }
-            if (Xin.CheckKeyReleased(Keys.B) && frameCount >= 5)
+            Xin.CheckKeyReleased(Keys.Enter)) && frameCount >= 5)
             {
                 frameCount = 0;
                 foreach (Point s in engine.Map.CharacterLayer.Characters.Keys)
@@ -242,7 +208,6 @@ namespace ShadowMonsters.GameStates
                     {
                         continue;
                     }
-
                     if (animation == AnimationKey.WalkUp &&
                     ((int)c.Sprite.Position.X != (int)Game1.Player.Sprite.Position.X ||
                     (int)c.Sprite.Position.Y > (int)Game1.Player.Sprite.Position.Y))
@@ -264,7 +229,56 @@ namespace ShadowMonsters.GameStates
                     float distance = Vector2.Distance(
                     Game1.Player.Sprite.Origin + Game1.Player.Sprite.Position,
                     c.Sprite.Origin + c.Sprite.Position);
-                    if (Math.Abs(distance) < (Engine.TileWidth + (Engine.TileWidth / 2)) && c.Alive())
+                    if (Math.Abs(distance) < Engine.TileWidth + Engine.TileWidth / 2)
+                    {
+                        manager.PushState(
+                        (ConversationState)GameRef.ConversationState);
+                        GameRef.ConversationState.SetConversation(c);
+                        GameRef.ConversationState.StartConversation();
+                        break;
+                    }
+                }
+            }
+            if (Xin.CheckKeyReleased(Keys.I))
+            {
+                manager.PushState(GameRef.ItemSelectionState);
+            }
+            if ((Xin.CheckKeyReleased(Keys.B)) && frameCount >= 5)
+            {
+                frameCount = 0;
+                foreach (Point s in engine.Map.CharacterLayer.Characters.Keys)
+                {
+                    Character c = engine.Map.CharacterLayer.Characters[s];
+                    AnimationKey animation = Game1.Player.Sprite.CurrentAnimation;
+                    if (animation == AnimationKey.WalkLeft &&
+                    ((int)c.Sprite.Position.X > (int)Game1.Player.Sprite.Position.X ||
+                    (int)c.Sprite.Position.Y != (int)Game1.Player.Sprite.Position.Y))
+                    {
+                        continue;
+                    }
+                    if (animation == AnimationKey.WalkUp &&
+                    ((int)c.Sprite.Position.X != (int)Game1.Player.Sprite.Position.X ||
+                    (int)c.Sprite.Position.Y > (int)Game1.Player.Sprite.Position.Y))
+                    {
+                        continue;
+                    }
+                    if (animation == AnimationKey.WalkRight &&
+                    ((int)c.Sprite.Position.X < (int)Game1.Player.Sprite.Position.X ||
+                    (int)c.Sprite.Position.Y != (int)Game1.Player.Sprite.Position.Y))
+                    {
+                        continue;
+                    }
+                    if (animation == AnimationKey.WalkDown &&
+                    ((int)c.Sprite.Position.X != (int)Game1.Player.Sprite.Position.X ||
+                    (int)c.Sprite.Position.Y < (int)Game1.Player.Sprite.Position.Y))
+                    {
+                        continue;
+                    }
+                    float distance = Vector2.Distance(
+                    Game1.Player.Sprite.Origin + Game1.Player.Sprite.Position,
+                    c.Sprite.Origin + c.Sprite.Position);
+                    if (Math.Abs(distance) < Engine.TileWidth + Engine.TileWidth / 2 &&
+                   c.Alive())
                     {
                         GameRef.StartBattleState.SetCombatants(Game1.Player, c);
                         manager.PushState(GameRef.StartBattleState);
@@ -272,23 +286,57 @@ namespace ShadowMonsters.GameStates
                     }
                 }
             }
-            Engine.Camera.LockToSprite(map, Game1.Player.Sprite, new Rectangle(0, 0, 1280, 720));
-            Game1.Player.Sprite.Update(gameTime);
+            if (Xin.CheckKeyReleased(Keys.F1))
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    aes.IV = IV;
+                    aes.Key = Key;
+                    string path =
+                   Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    path += "\\ShadowMonsters\\";
+                    try
+                    {
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                    }
+                    catch
+                    {
+                        // uh oh
+                    }
+                    try
+                    {
+                        ICryptoTransform encryptor = aes.CreateEncryptor(Key, IV);
+                        FileStream stream = new FileStream(
+                        path + "ShadowMonsters.sav",
+                        FileMode.Create,
+                        FileAccess.Write);
+                        using (CryptoStream cryptoStream = new CryptoStream(
+                        stream,
+                        encryptor,
+                        CryptoStreamMode.Write))
+                        {
+                            BinaryWriter writer = new BinaryWriter(cryptoStream);
+                            map.Save(writer);
+                            Game1.Player.Save(writer);
+                            writer.Close();
+                        }
+                        stream.Close();
+                        stream.Dispose();
+                    }
+                    catch
+                    {
+                        // uh oh
+                    }
+                }
+            }
+            Engine.Camera.LockToSprite(map, Game1.Player.Sprite, new Rectangle(0, 0, 1280,
+           720));
+            Game1.Player.Update(gameTime);
             base.Update(gameTime);
         }
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-            engine.Draw(gameTime, GameRef.SpriteBatch);
-            GameRef.SpriteBatch.Begin(
-                SpriteSortMode.Deferred,
-                BlendState.AlphaBlend,
-                SamplerState.PointClamp,
-                null, null, null,
-                Engine.Camera.Transformation
-                );
-            Game1.Player.Sprite.Draw(gameTime, GameRef.SpriteBatch);
-            GameRef.SpriteBatch.End();
-        }
+
     }
 }

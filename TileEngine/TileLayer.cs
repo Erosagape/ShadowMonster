@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.IO;
+
 namespace ShadowMonsters.TileEngine
 {
     public class Tile
@@ -48,15 +50,15 @@ namespace ShadowMonsters.TileEngine
             Visible = true;
             Enabled = true;
         }
-        public TileLayer(Tile[] tiles,int width,int height) 
-            :this()
+        public TileLayer(Tile[] tiles, int width, int height)
+            : this()
         {
             this.tiles = (Tile[])tiles.Clone();
             this.width = width;
             this.height = height;
         }
-        public TileLayer(int width,int height)
-            :this()
+        public TileLayer(int width, int height)
+            : this()
         {
             tiles = new Tile[height * width];
             this.width = width;
@@ -70,8 +72,8 @@ namespace ShadowMonsters.TileEngine
 
             }
         }
-        public TileLayer(int width,int height,int set,int index)
-            :this()
+        public TileLayer(int width, int height, int set, int index)
+            : this()
         {
             tiles = new Tile[height * width];
             this.width = width;
@@ -80,11 +82,11 @@ namespace ShadowMonsters.TileEngine
             {
                 for (int x = 0; x < this.width; x++)
                 {
-                    tiles[(y * width) + x] = new Tile(set,index);
+                    tiles[(y * width) + x] = new Tile(set, index);
                 }
             }
         }
-        public Tile GetTile(int x,int y)
+        public Tile GetTile(int x, int y)
         {
             if (x < 0 || y < 0)
                 return new Tile();
@@ -92,7 +94,7 @@ namespace ShadowMonsters.TileEngine
                 return new Tile();
             return tiles[(y * width) + x];
         }
-        public void SetTile(int x,int y,int tileSet,int tileIndex)
+        public void SetTile(int x, int y, int tileSet, int tileIndex)
         {
             if (x < 0 || y < 0)
                 return;
@@ -136,7 +138,7 @@ namespace ShadowMonsters.TileEngine
             for (int y = min.Y; y < max.Y; y++)
             {
                 destination.Y = y * Engine.TileHeight;
-                for(int x = min.X; x < max.X; x++)
+                for (int x = min.X; x < max.X; x++)
                 {
                     tile = GetTile(x, y);
                     if (tile.TileSet == -1 || tile.TileIndex == -1)
@@ -152,6 +154,19 @@ namespace ShadowMonsters.TileEngine
             }
 
             spriteBatch.End();
+        }
+        public void Save(BinaryWriter writer)
+        {
+            writer.Write(width);
+            writer.Write(height);
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    writer.Write(tiles[y * width + x].TileSet);
+                    writer.Write(tiles[y * width + x].TileIndex);
+                }
+            }
         }
     }
 }

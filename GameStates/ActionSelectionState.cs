@@ -10,11 +10,11 @@ namespace ShadowMonsters.GameStates
 {
     public interface IActionSelectionState
     {
-        void SetShadowMonsters(Monster player, Monster enemy);
+        void SetShadowMonsters(ShadowMonster player, ShadowMonster enemy);
     }
     public class ActionSelectionState : BaseGameState,IActionSelectionState
     {
-        Monster player, enemy;
+        ShadowMonster player, enemy;
         GameScene scene;
         Texture2D background,ShadowMonsterBorder,ShadowMonsterHealth;
         Rectangle playerRect, enemyRect, playerBorderRect, enemyBorderRect, playerMiniRect, enemyMiniRect, playerHealthRect, enemyHealthRect, healthSourceRect;
@@ -150,7 +150,7 @@ namespace ShadowMonsters.GameStates
                 );
             GameRef.SpriteBatch.End();
         }
-        public void SetShadowMonsters(Monster player,Monster enemy)
+        public void SetShadowMonsters(ShadowMonster player,ShadowMonster enemy)
         {
             this.player = player;
             this.enemy = enemy;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -35,6 +36,26 @@ namespace ShadowMonsters.TileEngine
                 c.Draw(gameTime, spriteBatch);
             }
             spriteBatch.End();
+        }
+        public bool Save(BinaryWriter writer)
+        {
+            writer.Write(characters.Count);
+            foreach (Point p in characters.Keys)
+            {
+                if (characters[p] is Merchant)
+                {
+                    writer.Write(2);
+                }
+                else
+                {
+                    writer.Write(1);
+                }
+                writer.Write(p.X);
+                writer.Write(p.Y);
+
+                characters[p].Save(writer);
+            }
+            return true;
         }
     }
 }

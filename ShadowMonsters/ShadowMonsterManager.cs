@@ -26,13 +26,13 @@ namespace ShadowMonsters
             127, 255, 097, 233, 162, 067, 111, 022,
         };
 
-        private static readonly Dictionary<string, Monster> monsterList = new Dictionary<string, Monster>();
+        private static readonly Dictionary<string, ShadowMonster> monsterList = new Dictionary<string, ShadowMonster>();
 
         #endregion
 
         #region Property Region
 
-        public static Dictionary<string, Monster> ShadowMonsterList
+        public static Dictionary<string, ShadowMonster> ShadowMonsterList
         {
             get { return monsterList; }
         }
@@ -45,7 +45,7 @@ namespace ShadowMonsters
 
         #region Method Region
 
-        public static void AddShadowMonster(string name, Monster monster)
+        public static void AddShadowMonster(string name, ShadowMonster monster)
         {
             if (!monsterList.ContainsKey(name))
             {
@@ -53,9 +53,9 @@ namespace ShadowMonsters
             }
         }
 
-        public static Monster GetShadowMonster(string name)
+        public static ShadowMonster GetShadowMonster(string name)
         {
-            return monsterList.ContainsKey(name) ? (Monster)monsterList[name].Clone() : null;
+            return monsterList.ContainsKey(name) ? (ShadowMonster)monsterList[name].Clone() : null;
         }
 
         public static void FromFile(string fileName, ContentManager content)
@@ -85,7 +85,7 @@ namespace ShadowMonsters
                             {
                                 string data = reader.ReadString();
                                 reader.ReadInt32();
-                                Monster monster = Monster.FromString(data, content);
+                                ShadowMonster monster = ShadowMonster.FromString(data, content);
                                 ShadowMonsterManager.AddShadowMonster(monster.Name, monster);
                             }
                         }

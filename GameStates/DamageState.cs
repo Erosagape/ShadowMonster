@@ -12,7 +12,7 @@ namespace ShadowMonsters.GameStates
     }
     public interface IDamageState
     {
-        void SetShadowMonsters(ShadowMonsters.Monster  player, ShadowMonsters.Monster  enemy);
+        void SetShadowMonsters(ShadowMonsters.ShadowMonster  player, ShadowMonsters.ShadowMonster  enemy);
         void SetMoves(IMove playerMove, IMove enemyMove);
         void Start();
     }
@@ -24,8 +24,8 @@ namespace ShadowMonsters.GameStates
         private Rectangle enemyRect;
         private TimeSpan cTimer;
         private TimeSpan dTimer;
-        private ShadowMonsters.Monster  player;
-        private ShadowMonsters.Monster  enemy;
+        private ShadowMonsters.ShadowMonster  player;
+        private ShadowMonsters.ShadowMonster  enemy;
         private IMove playerMove;
         private IMove enemyMove;
         private bool first;
@@ -158,7 +158,7 @@ dTimer > TimeSpan.FromSeconds(2))
                 MoveType.Attack)
                 {
                     location.Y += FontManager.GetFont("test").LineSpacing;
-                    if (ShadowMonsters.Monster .GetMoveModifier(playerMove.MoveElement, enemy.Element) <
+                    if (ShadowMonsters.ShadowMonster .GetMoveModifier(playerMove.MoveElement, enemy.Element) <
                     1f)
                     {
                         GameRef.SpriteBatch.DrawString(
@@ -167,7 +167,7 @@ dTimer > TimeSpan.FromSeconds(2))
                         location,
                         Color.Black);
                     }
-                    else if (ShadowMonsters.Monster .GetMoveModifier(playerMove.MoveElement,
+                    else if (ShadowMonsters.ShadowMonster .GetMoveModifier(playerMove.MoveElement,
                     enemy.Element) > 1f)
                     {
                         GameRef.SpriteBatch.DrawString(
@@ -189,7 +189,7 @@ dTimer > TimeSpan.FromSeconds(2))
                 if (enemyMove.Target == Target.Enemy && playerMove.MoveType == MoveType.Attack)
                 {
                     location.Y += FontManager.GetFont("test").LineSpacing;
-                    if (ShadowMonsters.Monster .GetMoveModifier(enemyMove.MoveElement, player.Element) <
+                    if (ShadowMonsters.ShadowMonster .GetMoveModifier(enemyMove.MoveElement, player.Element) <
                     1f)
                     {
                         GameRef.SpriteBatch.DrawString(
@@ -198,7 +198,7 @@ dTimer > TimeSpan.FromSeconds(2))
                         location,
                         Color.Black);
                     }
-                    else if (ShadowMonsters.Monster .GetMoveModifier(enemyMove.MoveElement,
+                    else if (ShadowMonsters.ShadowMonster .GetMoveModifier(enemyMove.MoveElement,
                     player.Element) > 1f)
                     {
                         GameRef.SpriteBatch.DrawString(
@@ -233,7 +233,7 @@ dTimer > TimeSpan.FromSeconds(2))
             GameRef.SpriteBatch.Draw(enemy.Texture, enemyMiniRect, Color.White);
             GameRef.SpriteBatch.End();
         }
-        public void SetShadowMonsters(ShadowMonsters.Monster  player, ShadowMonsters.Monster  enemy)
+        public void SetShadowMonsters(ShadowMonsters.ShadowMonster  player, ShadowMonsters.ShadowMonster  enemy)
         {
             this.player = player;
             this.enemy = enemy;

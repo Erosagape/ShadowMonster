@@ -9,13 +9,13 @@ namespace ShadowMonsters.GameStates
 {
     public interface IBattleOverState
     {
-        void SetShadowMonsters(Monster player, Monster  enemy);
+        void SetShadowMonsters(ShadowMonster player, ShadowMonster  enemy);
     }
     public class BattleOverState : BaseGameState, IBattleOverState
     {
         #region Field Region
-        private Monster player;
-        private Monster enemy;
+        private ShadowMonster player;
+        private ShadowMonster enemy;
         private Texture2D combatBackground;
         private Rectangle playerRect;
         private Rectangle enemyRect;
@@ -168,7 +168,7 @@ namespace ShadowMonsters.GameStates
             GameRef.SpriteBatch.Draw(enemy.Texture, enemyMiniRect, Color.White);
             GameRef.SpriteBatch.End();
         }
-        public void SetShadowMonsters(Monster  player, Monster  enemy)
+        public void SetShadowMonsters(ShadowMonster  player, ShadowMonster  enemy)
         {
             levelUp = false;
             this.player = player;

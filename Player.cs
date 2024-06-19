@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ShadowMonsters.Items;
+using System.IO;
 
 namespace ShadowMonsters
 {
@@ -23,17 +24,17 @@ namespace ShadowMonsters
         private string textureName;
         private float speed = 256f;
         private Vector2 position;
-        private readonly List<ShadowMonsters.Monster > shadowMonsters = new List<ShadowMonsters.Monster >();
+        private readonly List<ShadowMonsters.ShadowMonster > shadowMonsters = new List<ShadowMonsters.ShadowMonster >();
         private int currentShadowMonster;
-        private readonly ShadowMonsters.Monster [] battleShadowMonsters = new ShadowMonsters.Monster [MaxShadowMonsters];
+        private readonly ShadowMonsters.ShadowMonster [] battleShadowMonsters = new ShadowMonsters.ShadowMonster [MaxShadowMonsters];
         private int selected;
         private readonly Dictionary<string, string> _characterMet = new Dictionary<string, string>();
         private readonly Dictionary<int, string> _keysfound = new Dictionary<int, string>();
-        public ShadowMonsters.Monster [] BattleShadowMonsters
+        public ShadowMonsters.ShadowMonster [] BattleShadowMonsters
         {
             get { return battleShadowMonsters; }
         }
-        public ShadowMonsters.Monster  Selected
+        public ShadowMonsters.ShadowMonster  Selected
         {
             get { return battleShadowMonsters[selected]; }
         }
@@ -82,7 +83,7 @@ namespace ShadowMonsters
             Gold = 1000;
             backpack = new Backpack();
         }
-        public virtual void AddShadowMonster(ShadowMonsters.Monster  mon)
+        public virtual void AddShadowMonster(ShadowMonsters.ShadowMonster  mon)
         {
             shadowMonsters.Add(mon);
         }
@@ -98,7 +99,7 @@ namespace ShadowMonsters
                     selected = index;
             }
         }
-        public ShadowMonsters.Monster  GetShadowMonster(int index)
+        public ShadowMonsters.ShadowMonster  GetShadowMonster(int index)
         {
             if (index < 0 || index >= MaxShadowMonsters)
             {
@@ -115,7 +116,7 @@ namespace ShadowMonsters
             }
             return false;
         }
-        public ShadowMonsters.Monster  GetBattleShadowMonster(int index)
+        public ShadowMonsters.ShadowMonster  GetBattleShadowMonster(int index)
         {
             if (index < 0 || index >= MaxShadowMonsters)
             {
@@ -154,6 +155,51 @@ namespace ShadowMonsters
         {
             sprite.Draw(gameTime, gameRef.SpriteBatch);
             base.Draw(gameTime);
+        }
+        internal void Save(BinaryWriter writer)
+        {
+            StringBuilder b = new StringBuilder();
+            b.Append(name);
+            b.Append(",");
+            b.Append(gender);
+            b.Append(",");
+            b.Append(mapName);
+            b.Append(",");
+            b.Append(tile.X);
+            b.Append(",");
+            b.Append(tile.Y);
+            b.Append(",");
+            b.Append(textureName);
+            b.Append(",");
+            b.Append(speed);
+            b.Append(",");
+            b.Append(sprite.CurrentAnimation);
+            b.Append(",");
+            b.Append(sprite.Position.X);
+            b.Append(",");
+            b.Append(sprite.Position.Y);
+            writer.Write(b.ToString());
+            writer.Write(shadowMonsters.Count);
+            foreach (ShadowMonster a in shadowMonsters)
+            {
+                a.Save(writer);
+                writer.Write(-1);
+            }
+            writer.Write(selected);
+            foreach (ShadowMonster a in battleShadowMonsters)
+            {
+                if (a != null)
+                {
+                    a.Save(writer);
+                    writer.Write(-1);
+                }
+                else
+                {
+                    writer.Write("*");
+                    writer.Write(-1);
+                }
+            }
+            backpack.Save(writer);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -93,6 +94,12 @@ namespace ShadowMonsters.Items
                 default:
                     return null;
             }
+        }
+        public void Save(BinaryWriter writer)
+        {
+            writer.Write(Items.Count);
+            foreach (Item i in Items)
+                i.Save(writer);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ShadowMonsters.Items
         public string Name { get { return "Potion"; } }
         public int Price { get { return 200; } }
         public bool Usable => true;
-        public void Apply(Monster monster)
+        public void Apply(ShadowMonster monster)
         {
             monster.Heal(50);
         }

@@ -12,7 +12,7 @@ namespace ShadowMonsters.Items
 
         public bool Usable => true;
 
-        public void Apply(Monster monster)
+        public void Apply(ShadowMonster monster)
         {
             monster.IsPoisoned = false;
         }

@@ -11,15 +11,15 @@ namespace ShadowMonsters.GameStates
 {
     public interface IBattleState
     {
-        void SetShadowMonsters(Monster player, Monster enemy);
+        void SetShadowMonsters(ShadowMonster player, ShadowMonster enemy);
         void StartBattle();
-        void ChangePlayerShadowMonster(Monster selected);
+        void ChangePlayerShadowMonster(ShadowMonster selected);
     }
     public class BattleState : BaseGameState, IBattleState
     {
         #region Field Region
-        private Monster player;
-        private Monster enemy;
+        private ShadowMonster player;
+        private ShadowMonster enemy;
         private GameScene combatScene;
         private Texture2D combatBackground;
         private Rectangle playerRect;
@@ -37,7 +37,7 @@ namespace ShadowMonsters.GameStates
         private float enemyHealth;
         private Texture2D avatarBorder;
         private Texture2D avatarHealth;
-        public Monster EnemyShadowMonster { get { return enemy; } }
+        public ShadowMonster EnemyShadowMonster { get { return enemy; } }
         #endregion
         #region Property Region
         #endregion
@@ -173,7 +173,7 @@ namespace ShadowMonsters.GameStates
             GameRef.SpriteBatch.Draw(enemy.Texture, enemyMiniRect, Color.White);
             GameRef.SpriteBatch.End();
         }
-        public void SetShadowMonsters(Monster player, Monster enemy)
+        public void SetShadowMonsters(ShadowMonster player, ShadowMonster enemy)
         {
             this.player = player;
             this.enemy = enemy;
@@ -203,7 +203,7 @@ namespace ShadowMonsters.GameStates
             playerHealth = 100f;
             enemyHealth = 100f;
         }
-        public void ChangePlayerShadowMonster(Monster selected)
+        public void ChangePlayerShadowMonster(ShadowMonster selected)
         {
             this.player = selected;
             List<SceneOption> moves = new List<SceneOption>();

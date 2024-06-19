@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using ShadowMonsters.TileEngine;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
-
+using System.IO;
 
 namespace ShadowMonsters.Characters
 {
@@ -25,9 +25,9 @@ namespace ShadowMonsters.Characters
         { 
             get { return textureName; }
         }
-        protected readonly ShadowMonsters.Monster [] monsters = new ShadowMonsters.Monster [MonsterLimit];
+        protected readonly ShadowMonsters.ShadowMonster [] monsters = new ShadowMonsters.ShadowMonster [MonsterLimit];
         protected int currentMonster;
-        protected ShadowMonsters.Monster  givingMonster;
+        protected ShadowMonsters.ShadowMonster  givingMonster;
         protected AnimatedSprite sprite;
         public AnimatedSprite Sprite
         {
@@ -42,12 +42,12 @@ namespace ShadowMonsters.Characters
         }
         public bool Battled { get; set; }
         protected static Game gameRef;
-        public List<ShadowMonsters.Monster > BattleMonsters => monsters.ToList<ShadowMonsters.Monster >();
-        public ShadowMonsters.Monster  BattleMonster
+        public List<ShadowMonsters.ShadowMonster > BattleMonsters => monsters.ToList<ShadowMonsters.ShadowMonster >();
+        public ShadowMonsters.ShadowMonster  BattleMonster
         {
             get { return monsters[currentMonster]; }
         }
-        public ShadowMonsters.Monster  GiveMonster
+        public ShadowMonsters.ShadowMonster  GiveMonster
         {
             get { return givingMonster; }
         }
@@ -116,6 +116,47 @@ namespace ShadowMonsters.Characters
                 }
             }
             return false;
+        }
+        public virtual bool Save(BinaryWriter writer)
+        {
+            StringBuilder b = new StringBuilder();
+            b.Append(name);
+            b.Append(",");
+            b.Append(textureName);
+            b.Append(",");
+            b.Append(sprite.CurrentAnimation);
+            b.Append(",");
+            b.Append(conversation);
+            b.Append(",");
+            b.Append(currentMonster);
+            b.Append(",");
+            b.Append(Battled);
+            writer.Write(b.ToString());
+            writer.Write(-1);
+            foreach (ShadowMonster a in monsters)
+            {
+                if (a != null)
+                {
+                    a.Save(writer);
+                    writer.Write(-1);
+                }
+                else
+                {
+                    writer.Write("*");
+                    writer.Write(-1);
+                }
+            }
+            if (givingMonster != null)
+            {
+                givingMonster.Save(writer);
+                writer.Write(-1);
+            }
+            else
+            {
+                writer.Write("*");
+                writer.Write(-1);
+            }
+            return true;
         }
     }
 }

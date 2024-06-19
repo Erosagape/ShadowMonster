@@ -15,7 +15,7 @@ namespace ShadowMonsters
         Dark, Earth, Fire, Light, Water, Wind
     }
 
-    public class Monster
+    public class ShadowMonster
     {
         #region Field Region
 
@@ -136,7 +136,7 @@ namespace ShadowMonsters
 
         #region Constructor Region
 
-        private Monster()
+        private ShadowMonster()
         {
             level = 1;
             knownMoves = new Dictionary<string, IMove>();
@@ -150,7 +150,7 @@ namespace ShadowMonsters
 
         #region Method region
 
-        public void ResoleveMove(IMove move, Monster target)
+        public void ResoleveMove(IMove move, ShadowMonster target)
         {
             bool found;
             switch (move.Target)
@@ -417,7 +417,7 @@ namespace ShadowMonsters
             //currentHealth = health;
         }
 
-        public long WinBattle(Monster target)
+        public long WinBattle(ShadowMonster target)
         {
             int levelDiff = target.Level - level;
             long expGained;
@@ -450,7 +450,7 @@ namespace ShadowMonsters
             return expGained;
         }
 
-        public long LoseBattle(Monster target)
+        public long LoseBattle(ShadowMonster target)
         {
             long expGained = (long)((float)WinBattle(target) * .5f);
             experience += expGained;
@@ -473,7 +473,7 @@ namespace ShadowMonsters
 
         public object Clone()
         {
-            Monster monster = new Monster
+            ShadowMonster monster = new ShadowMonster
             {
                 name = this.name,
                 displayName = this.displayName,
@@ -525,9 +525,9 @@ namespace ShadowMonsters
             }
         }
 
-        public static Monster FromString(string description, ContentManager content)
+        public static ShadowMonster FromString(string description, ContentManager content)
         {
-            Monster monster = new Monster();
+            ShadowMonster monster = new ShadowMonster();
             string[] parts = description.Split(',');
 
             monster.name = parts[0];
@@ -579,9 +579,9 @@ namespace ShadowMonsters
             return sb.ToString();
         }
 
-        public static Monster FromString(string lineIn)
+        public static ShadowMonster FromString(string lineIn)
         {
-            Monster monster = new Monster();
+            ShadowMonster monster = new ShadowMonster();
             string[] parts = lineIn.Split(',');
 
             monster.name = parts[0];
@@ -621,7 +621,6 @@ namespace ShadowMonsters
         public bool Save(BinaryWriter writer)
         {
             StringBuilder b = new StringBuilder();
-
             b.Append(name);
             b.Append(",");
             b.Append(displayName);
@@ -655,7 +654,6 @@ namespace ShadowMonsters
             b.Append(Source.X);
             b.Append(",");
             b.Append(Source.Y);
-
             foreach (string s in knownMoves.Keys)
             {
                 b.Append(",");
@@ -663,15 +661,13 @@ namespace ShadowMonsters
                 b.Append(":");
                 b.Append(knownMoves[s].UnlockedAt);
             }
-
             writer.Write(b.ToString());
-
             return true;
         }
 
-        public static Monster Load(ContentManager content, string monster)
+        public static ShadowMonster Load(ContentManager content, string monster)
         {
-            Monster s = new Monster();
+            ShadowMonster s = new ShadowMonster();
 
             string[] parts = monster.Split(',');
             s.name = parts[0];

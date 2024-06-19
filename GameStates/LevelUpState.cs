@@ -12,7 +12,7 @@ namespace ShadowMonsters.GameStates
 {
     public interface ILevelUpState
     {
-        void SetShadowMonster(Monster playerShadowMonster);
+        void SetShadowMonster(ShadowMonster playerShadowMonster);
     }
     public class LevelUpState : BaseGameState, ILevelUpState
     {
@@ -20,7 +20,7 @@ namespace ShadowMonsters.GameStates
         private Rectangle destination;
         private int points;
         private int selected;
-        private Monster player;
+        private ShadowMonster player;
         private readonly Dictionary<string, int> attributes = new Dictionary<string, int>();
         private readonly Dictionary<string, int> assignedTo = new Dictionary<string, int>();
         private Texture2D levelUpBackground;
@@ -198,7 +198,7 @@ namespace ShadowMonsters.GameStates
             Color.White);
             GameRef.SpriteBatch.End();
         }
-        public void SetShadowMonster(Monster playerShadowMonster)
+        public void SetShadowMonster(ShadowMonster playerShadowMonster)
         {
             player = playerShadowMonster;
             attributes["Attack"] = player.BaseAttack;

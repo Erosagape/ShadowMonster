@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.IO;
+
 namespace ShadowMonsters.TileEngine
 {
     public class TileSet
@@ -58,6 +60,19 @@ namespace ShadowMonsters.TileEngine
                     tile++;
                 }
            }
+        }
+        public void Save(BinaryWriter writer)
+        {
+            writer.Write(imageName.Count);
+            foreach (string s in imageName)
+            {
+                writer.Write(s);
+                writer.Write(-1);
+            }
+            writer.Write(TilesWide);
+            writer.Write(TilesHigh);
+            writer.Write(TileWidth);
+            writer.Write(TileHeight);
         }
     }
 }

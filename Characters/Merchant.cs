@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,13 +35,19 @@ namespace ShadowMonsters.Characters
             character.currentMonster = int.Parse(parts[4]);
             for(int i=5;i<11 && i < parts.Length - 1; i++)
             {
-                Monster monster = ShadowMonsterManager.GetShadowMonster(
+                ShadowMonster monster = ShadowMonsterManager.GetShadowMonster(
                     parts[i].ToLowerInvariant()
                     );
                 character.monsters[i - 5] = monster;
             }
             character.givingMonster = ShadowMonsterManager.GetShadowMonster(parts[parts.Length - 1].ToLowerInvariant());
             return character;
+        }
+        public override bool Save(BinaryWriter writer)
+        {
+            base.Save(writer);
+            backpack.Save(writer);
+            return true;
         }
     }
 }
