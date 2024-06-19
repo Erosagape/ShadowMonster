@@ -192,6 +192,21 @@ namespace ShadowMonsters.TileEngine
             collisionLayer.Save(writer);
             return true;
         }
-
+        public static TileMap Load(ContentManager content, BinaryReader reader)
+        {
+            TileMap map = new TileMap();
+            map.mapName = reader.ReadString();
+            map.characterLayer = CharacterLayer.Load(content, reader);
+            map.tileSet = TileSet.Load(content, reader);
+            map.edgeLayer = TileLayer.Load(reader);
+            map.groundLayer = TileLayer.Load(reader);
+            map.decorationLayer = TileLayer.Load(reader);
+            map.buildingLayer = TileLayer.Load(reader);
+            map.portalLayer = PortalLayer.Load(reader);
+            map.collisionLayer = CollisionLayer.Load(reader);
+            map.mapWidth = map.groundLayer.Width;
+            map.mapHeight = map.groundLayer.Height;
+            return map;
+        }
     }
 }

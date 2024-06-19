@@ -74,5 +74,37 @@ namespace ShadowMonsters.TileEngine
             writer.Write(TileWidth);
             writer.Write(TileHeight);
         }
+        public static TileSet Load(ContentManager content, BinaryReader reader)
+        {
+            TileSet t = new TileSet();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                t.imageName.Add(reader.ReadString());
+                t.image.Add(content.Load<Texture2D>(
+                @"Tiles\" + t.imageName[t.imageName.Count - 1]));
+                reader.ReadInt32();
+            }
+            t.TilesWide = reader.ReadInt32();
+            t.TilesHigh = reader.ReadInt32();
+            t.TileWidth = reader.ReadInt32();
+            t.TileHeight = reader.ReadInt32();
+            t.sourceRectangles = new Rectangle[t.TilesWide * t.TilesHigh];
+            int tile = 0;
+            for (int y = 0; y < t.TilesHigh; y++)
+            {
+                for (int x = 0; x < t.TilesWide; x++)
+                {
+                    t.sourceRectangles[tile] = new Rectangle(
+                    x * t.TileWidth,
+                    y * t.TileHeight,
+                    t.TileWidth,
+                    t.TileHeight);
+                    tile++;
+                }
+            }
+            return t;
+        }
+
     }
 }

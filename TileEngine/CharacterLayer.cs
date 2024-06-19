@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ShadowMonsters.Characters;
 namespace ShadowMonsters.TileEngine
@@ -57,5 +58,27 @@ namespace ShadowMonsters.TileEngine
             }
             return true;
         }
+        public static CharacterLayer Load(ContentManager content, BinaryReader reader)
+        {
+            CharacterLayer layer = new CharacterLayer();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                Character c = null;
+                int charType = reader.ReadInt32();
+                Point position = new Point(reader.ReadInt32(), reader.ReadInt32());
+                if (charType == 1)
+                {
+                    c = Character.Load(content, reader);
+                }
+                else if (charType == 2)
+                {
+                    c = Merchant.Load(content, reader);
+                }
+                layer.characters.Add(position, c);
+            }
+            return layer;
+        }
+
     }
 }

@@ -156,6 +156,7 @@ namespace ShadowMonsters
             sprite.Draw(gameTime, gameRef.SpriteBatch);
             base.Draw(gameTime);
         }
+        
         internal void Save(BinaryWriter writer)
         {
             StringBuilder b = new StringBuilder();
@@ -199,7 +200,49 @@ namespace ShadowMonsters
                     writer.Write(-1);
                 }
             }
+            writer.Write(-1);
             backpack.Save(writer);
+        }
+        public static Player Load(Game1 game, BinaryReader reader)
+        {
+            Player player = new Player(game);
+            player.gameRef = game;
+            string data = reader.ReadString();
+            string[] parts = data.Split(',');
+            player.name = parts[0];
+            player.gender = bool.Parse(parts[1]);
+            player.mapName = parts[2];
+            player.tile = new Point(
+            int.Parse(parts[3]),
+            int.Parse(parts[4]));
+            player.textureName = parts[5];
+            player.speed = float.Parse(parts[6]);
+            player.sprite = new AnimatedSprite(
+            game.Content.Load<Texture2D>(parts[5]),
+            Game1.Animations);
+            player.sprite.CurrentAnimation = (AnimationKey)Enum.Parse(typeof(AnimationKey),
+           parts[7]);
+            player.sprite.Position = new Vector2(float.Parse(parts[8]), float.Parse(parts[9]));
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                ShadowMonster a = ShadowMonster.Load(game.Content, reader.ReadString());
+                reader.ReadInt32();
+                player.shadowMonsters.Add(a);
+            }
+            player.selected = reader.ReadInt32();
+            for (int i = 0; i < 6; i++)
+            {
+                string monster = reader.ReadString();
+                reader.ReadInt32();
+                if (monster != "*")
+                {
+                    ShadowMonster a = ShadowMonster.Load(game.Content, monster);
+                    player.battleShadowMonsters[i] = a;
+                }
+            }
+            player.backpack = Backpack.Load(reader);
+            return player;
         }
     }
 }

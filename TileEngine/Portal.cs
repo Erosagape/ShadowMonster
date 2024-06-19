@@ -51,6 +51,17 @@ namespace ShadowMonsters.TileEngine
             writer.Write(destinationTile.X);
             writer.Write(destinationTile.Y);
         }
+        public static Portal Load(BinaryReader reader)
+        {
+            Portal p = new Portal
+            {
+                DestinationLevel = reader.ReadString(),
+                SourceTile = new Point(reader.ReadInt32(), reader.ReadInt32()),
+                DestinationTile = new Point(reader.ReadInt32(), reader.ReadInt32())
+            };
+            return p;
+        }
+
         #endregion
     }
 }

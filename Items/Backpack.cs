@@ -101,5 +101,19 @@ namespace ShadowMonsters.Items
             foreach (Item i in Items)
                 i.Save(writer);
         }
+        public static Backpack Load(BinaryReader reader)
+        {
+            reader.ReadInt32();
+            Backpack b = new Backpack();
+            int count = reader.ReadInt32();
+
+            for (int i = 0; i < count; i++)
+            {
+                string[] item = reader.ReadString().Split(':');
+                reader.ReadInt32();
+                b.AddItem(item[0], int.Parse(item[1]));
+            }
+            return b;
+        }
     }
 }

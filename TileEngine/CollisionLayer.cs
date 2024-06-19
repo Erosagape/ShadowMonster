@@ -56,6 +56,19 @@ namespace ShadowMonsters.TileEngine
             }
             spriteBatch.End();
         }
-
+        internal static CollisionLayer Load(BinaryReader reader)
+        {
+            CollisionLayer layer = new CollisionLayer();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                CollisionType collision = (CollisionType)reader.ReadInt32();
+                Point area = new Point(
+                reader.ReadInt32(),
+                reader.ReadInt32());
+                layer.collisions.Add(area, collision);
+            }
+            return layer;
+        }
     }
 }

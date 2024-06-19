@@ -7,6 +7,7 @@ using ShadowMonsters.TileEngine;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using Microsoft.Xna.Framework.Content;
 
 namespace ShadowMonsters.Characters
 {
@@ -157,6 +158,41 @@ namespace ShadowMonsters.Characters
                 writer.Write(-1);
             }
             return true;
+        }
+        public static Character Load(ContentManager content, BinaryReader reader)
+        {
+            Character c = new Character();
+
+            string data = reader.ReadString();
+            string[] parts = data.Split(',');
+            c.name = parts[0];
+            c.textureName = parts[1];
+            c.sprite = new AnimatedSprite(
+            content.Load<Texture2D>(
+            @"CharacterSprites\" + parts[1]),
+            Game1.Animations);
+            c.sprite.CurrentAnimation = (AnimationKey)Enum.Parse(typeof(AnimationKey),
+           parts[2]);
+            c.conversation = parts[3];
+            c.currentMonster = int.Parse(parts[4]);
+            c.Battled = bool.Parse(parts[5]);
+            reader.ReadInt32();
+            for (int i = 0; i < 6; i++)
+            {
+                string avatar = reader.ReadString();
+                if (avatar != "*")
+                {
+                    c.monsters[i] = ShadowMonster.Load(content, avatar);
+                }
+                reader.ReadInt32();
+            }
+            string giving = reader.ReadString();
+            if (giving != "*")
+            {
+                c.givingMonster = ShadowMonster.Load(content, giving);
+            }
+            reader.ReadInt32();
+            return c;
         }
     }
 }

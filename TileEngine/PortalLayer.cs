@@ -65,5 +65,17 @@ namespace ShadowMonsters.TileEngine
             }
             spriteBatch.End();
         }
+        public static PortalLayer Load(BinaryReader reader)
+        {
+            PortalLayer layer = new PortalLayer();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                string r = reader.ReadString();
+                Portal p = Portal.Load(reader);
+                layer.portals.Add(r, p);
+            }
+            return layer;
+        }
     }
 }

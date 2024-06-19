@@ -30,45 +30,39 @@ namespace ShadowMonsters.GameStates
         protected override void LoadContent()
         {
             MoveManager.FillMoves();
-            // TODO: use this.Content to load your game content here
             ShadowMonsterManager.FromFile(@".\Content\ShadowMonsters.txt", content);
             Game1.Player.AddShadowMonster(ShadowMonsterManager.GetShadowMonster("water1"));
             Game1.Player.SetCurrentShadowMonster(0);
             Game1.Player.BattleShadowMonsters[0] = Game1.Player.GetShadowMonster(0);
-
             TileSet set = new TileSet();
-            set.TextureNames.Add("tileset1");
-            set.Textures.Add(content.Load<Texture2D>("Tiles/tileset16-outdoors"));
-
+            set.TextureNames.Add("tileset16-outdoors");
+            set.Textures.Add(content.Load<Texture2D>(@"Tiles\tileset16-outdoors"));
             TileLayer groundLayer = new TileLayer(100, 100, 0, 1);
             TileLayer edgeLayer = new TileLayer(100, 100);
             TileLayer buildingLayer = new TileLayer(100, 100);
             TileLayer decorationLayer = new TileLayer(100, 100);
-
             for (int i = 0; i < 1000; i++)
             {
-                decorationLayer.SetTile(
-                    random.Next(0, 100),
-                    random.Next(0, 100),
-                    0,
-                    random.Next(2, 4));
+                decorationLayer.SetTile(random.Next(0, 100), random.Next(0, 100), 0,
+               random.Next(2, 4));
             }
-            map = new TileMap(set, groundLayer, edgeLayer, buildingLayer, decorationLayer, "level1");
-
-            Character c = Character.FromString(GameRef, "Paul,ninja_m,WalkDown,PaulHello,0,fire1,,,,,,,");
+            map = new TileMap(set, groundLayer, edgeLayer, buildingLayer, decorationLayer,
+           "level1");
+            Character c = Character.FromString(GameRef,
+           "Paul,ninja_m,WalkDown,PaulHello,0,fire1,fire1,,,,,,dark1");
             c.Sprite.Position = new Vector2(2 * Engine.TileWidth, 2 * Engine.TileHeight);
             map.CharacterLayer.Characters.Add(new Point(2, 2), c);
-
-            Merchant m = Merchant.FromString(GameRef, "Bonnie,ninja_f,WalkLeft,BonnieHello,0,earth1,earth1,,,,,,");
+            Merchant m = Merchant.FromString(GameRef,
+           "Bonnie,ninja_f,WalkLeft,BonnieHello,0,earth1,earth1,,,,,,");
             m.Sprite.Position = new Vector2(4 * Engine.TileWidth, 4 * Engine.TileHeight);
             m.Backpack.AddItem("Potion", 99);
             m.Backpack.AddItem("Antidote", 10);
             map.CharacterLayer.Characters.Add(new Point(4, 4), m);
-
             engine.SetMap(map);
             base.LoadContent();
         }
-        
+
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -93,6 +87,7 @@ namespace ShadowMonsters.GameStates
  067, 090, 197, 043, 049, 029, 178, 211,
  127, 255, 097, 233, 162, 067, 111, 022,
         };
+
         public override void Update(GameTime gameTime)
         {
             engine.Update(gameTime);
@@ -332,11 +327,41 @@ namespace ShadowMonsters.GameStates
                     }
                 }
             }
-            Engine.Camera.LockToSprite(map, Game1.Player.Sprite, new Rectangle(0, 0, 1280,
-           720));
-            Game1.Player.Update(gameTime);
-            base.Update(gameTime);
+            if (Xin.CheckKeyReleased(Keys.F2))
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    aes.IV = IV;
+                    aes.Key = Key;
+                    string path = Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData);
+                    path += "\\ShadowMonsters\\";
+                    try
+                    {
+                        ICryptoTransform decryptor = aes.CreateDecryptor(Key, IV);
+                        FileStream stream = new FileStream(
+                        path + "ShadowMonsters.sav",
+                        FileMode.Open,
+                        FileAccess.Read);
+                        using (CryptoStream cryptoStream = new CryptoStream(
+                        stream,
+                        decryptor,
+                        CryptoStreamMode.Read))
+                        {
+                            BinaryReader reader = new BinaryReader(cryptoStream);
+                            map = TileMap.Load(content, reader);
+                            Game1.Player = Player.Load(GameRef, reader);
+                            reader.Close();
+                        }
+                        stream.Close();
+                        stream.Dispose();
+                    }
+                    catch (Exception exc)
+                    {
+                        exc.ToString();
+                    }
+                }
+            }
         }
-
     }
 }

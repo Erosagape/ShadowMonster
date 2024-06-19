@@ -168,5 +168,18 @@ namespace ShadowMonsters.TileEngine
                 }
             }
         }
+        public static TileLayer Load(BinaryReader reader)
+        {
+            TileLayer data = new TileLayer(reader.ReadInt32(), reader.ReadInt32());
+            for (int y = 0; y < data.Height; y++)
+            {
+                for (int x = 0; x < data.Width; x++)
+                {
+                    data.SetTile(x, y, reader.ReadInt32(), reader.ReadInt32());
+                }
+            }
+            return data;
+        }
+
     }
 }

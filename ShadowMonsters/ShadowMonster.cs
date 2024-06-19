@@ -668,73 +668,56 @@ namespace ShadowMonsters
         public static ShadowMonster Load(ContentManager content, string monster)
         {
             ShadowMonster s = new ShadowMonster();
-
             string[] parts = monster.Split(',');
             s.name = parts[0];
             s.displayName = parts[1];
             s.texture = content.Load<Texture2D>(@"ShadowMonsterImages\" + parts[1]);
-            s.element = (ShadowMonsterElement)Enum.Parse(typeof(ShadowMonsterElement), parts[2]);
-
+            s.element = (ShadowMonsterElement)Enum.Parse(typeof(ShadowMonsterElement),
+           parts[2]);
             int.TryParse(parts[3], out int value);
             s.experience = value;
-
             int.TryParse(parts[4], out value);
             s.costToBuy = value;
-
             int.TryParse(parts[5], out value);
             s.level = value;
-
             int.TryParse(parts[6], out value);
             s.attack = value;
-
             int.TryParse(parts[7], out value);
             s.defense = value;
-
             int.TryParse(parts[8], out value);
             s.speed = value;
-
             int.TryParse(parts[9], out value);
             s.health = value;
-
             int.TryParse(parts[10], out value);
             s.currentHealth = value;
-
             bool.TryParse(parts[11], out bool value1);
             s.IsAsleep = value1;
-
             bool.TryParse(parts[12], out value1);
             s.IsConfused = value1;
-
             bool.TryParse(parts[13], out value1);
             s.IsParalyzed = value1;
-
             bool.TryParse(parts[14], out value1);
             s.IsPoisoned = value1;
-
             int.TryParse(parts[15], out int x);
             int.TryParse(parts[16], out int y);
             s.Source = new Rectangle(x, y, 64, 64);
-
             for (int i = 17; i < parts.Length; i++)
             {
                 string[] moveParts = parts[i].Split(':');
-
                 if (moveParts[0] != "None")
                 {
                     IMove move = MoveManager.GetMove(moveParts[0]);
                     int.TryParse(moveParts[1], out value);
                     move.UnlockedAt = value;
-
                     if (move.UnlockedAt <= s.Level)
                     {
                         move.Unlock();
                     }
-
                     s.knownMoves.Add(move.Name, move);
                 }
             }
-
             return s;
         }
+
     }
 }
